@@ -6,6 +6,7 @@
  * Version: 1.0
  * Author: George Yates III
  * Author URI: http://georgeyatesiii.com
+ * Text Domain: crowdskout
  * License: GPL2
  * 
  * 
@@ -36,21 +37,14 @@ if (!function_exists('cdskt_add_analytics_js')) {
 	 * adds it to the footer of the application for tracking.
 	 */
 	function cdsks_add_analytics_js() {
-		$sourceId = 0; // @TODO
-		require CDSKT_PLUGIN_SERVER_ROOT . '/partials/footer-js.php';
+		$sourceId = get_option('cdskt_source_id');
+
+		if (is_numeric($sourceId) && 0 !== (int) $sourceId) {
+			require CDSKT_PLUGIN_SERVER_ROOT . '/partials/footer-js.php';
+		}
 	}
 	add_action('wp_footer', 'cdsks_add_analytics_js');
 }
 
-if (!function_exists('cdskt_add_settings')) {
-	/**
-	 * Registering our settings
-	 */
-	function cdskt_add_settings() {
-		register_setting('cdskt_plugin', 'sourceId', 'sanitize_owner_id');
-
-	}
-	add_action('admin_init', 'cdskt_add_settings');
-}
-
+// Reponsible for generating the settings page
 require_once CDSKT_PLUGIN_SERVER_ROOT . '/admin/admin-page.php';
