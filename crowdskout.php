@@ -25,6 +25,11 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
+/**
+ * Let's define our constants
+ */
+define('CDSKT_PLUGIN_SERVER_ROOT', __DIR__);
+
 if (!function_exists('cdskt_add_analytics_js')) {
 	/**
 	 * The main function that takes our javascript and
@@ -32,7 +37,7 @@ if (!function_exists('cdskt_add_analytics_js')) {
 	 */
 	function cdsks_add_analytics_js() {
 		$sourceId = 0; // @TODO
-		require 'partials/footer-js.php';
+		require CDSKT_PLUGIN_SERVER_ROOT . '/partials/footer-js.php';
 	}
 	add_action('wp_footer', 'cdsks_add_analytics_js');
 }
@@ -42,8 +47,10 @@ if (!function_exists('cdskt_add_settings')) {
 	 * Registering our settings
 	 */
 	function cdskt_add_settings() {
-		register_settings('cdskt_plugin', 'sourceId');
+		register_setting('cdskt_plugin', 'sourceId', 'sanitize_owner_id');
 
 	}
 	add_action('admin_init', 'cdskt_add_settings');
 }
+
+require_once CDSKT_PLUGIN_SERVER_ROOT . '/admin/admin-page.php';
