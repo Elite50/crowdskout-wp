@@ -1,2 +1,2 @@
 #The Crowdskout WordPress Plugin
-Currently only adds in the JavaScript analytics code in the footer. Includes an admin area to enter the Source ID.
+Adds the JavaScript code needed for the [Crowdskout](https://crowdskout.com) analytics suite in the footer. Includes an admin area to enter the Source ID.
