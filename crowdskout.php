@@ -8,12 +8,12 @@
  * Author URI: http://georgeyatesiii.com
  * Text Domain: crowdskout
  * License: GPL2
- * 
- * 
+ *
+ *
  * Copyright 2014  George Yates III  (email : me@georgeyatesiii.com)
- * 
+ *
  * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License, version 2, as 
+ * it under the terms of the GNU General Public License, version 2, as
  * published by the Free Software Foundation.
  *
  * This program is distributed in the hope that it will be useful,
@@ -29,22 +29,22 @@
 /**
  * Let's define our constants
  */
-define('CDSKT_PLUGIN_SERVER_ROOT', __DIR__);
+define('CSKT_PLUGIN_SERVER_ROOT', __DIR__);
 
-if (!function_exists('cdskt_add_analytics_js')) {
+if (!function_exists('cskt_add_analytics_js')) {
 	/**
 	 * The main function that takes our javascript and
 	 * adds it to the footer of the application for tracking.
 	 */
-	function cdsks_add_analytics_js() {
-		$sourceId = get_option('cdskt_source_id');
+	function cskt_add_analytics_js() {
+		$sourceId = get_option('cskt_source_id');
 
 		if (is_numeric($sourceId) && 0 !== (int) $sourceId) {
-			require CDSKT_PLUGIN_SERVER_ROOT . '/partials/footer-js.php';
+			require CSKT_PLUGIN_SERVER_ROOT . '/partials/footer-js.php';
 		}
 	}
-	add_action('wp_footer', 'cdsks_add_analytics_js');
+	add_action('wp_footer', 'cskt_add_analytics_js');
 }
 
 // Reponsible for generating the settings page
-require_once CDSKT_PLUGIN_SERVER_ROOT . '/admin/admin-page.php';
+require_once CSKT_PLUGIN_SERVER_ROOT . '/admin/admin-page.php';
