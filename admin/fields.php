@@ -7,6 +7,6 @@ if (!function_exists('cdskt_input_number')) {
 	function cdskt_input_number($args) {
 		$name = $args['name'];
 		$value = get_option($name);
-		require CDSKT_PLUGIN_SERVER_ROOT . '/partials/input-number.php';
+		require CSKT_PLUGIN_SERVER_ROOT . '/partials/input-number.php';
 	}
 }
