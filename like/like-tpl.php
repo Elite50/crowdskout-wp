@@ -4,7 +4,6 @@
 		$("#cs-like").click(function(e) {
 			e.preventDefault();
 			var clickData = $(this).data();
-			console.log(clickData);
 			$.ajax({
 				url: ajax.url,
 				type: 'POST',

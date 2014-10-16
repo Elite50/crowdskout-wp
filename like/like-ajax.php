@@ -1,6 +1,7 @@
 <?php
 
 add_action('wp_ajax_cs_like_click', 'cs_like_click_handler');
+add_action('wp_ajax_no_priv_cs_like_click', 'cs_like_click_handler');
 
 //TODO: Add nonce check
 //TODO: Send to crowdskout

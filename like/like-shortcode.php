@@ -1,4 +1,5 @@
 <?php
+
 require CSKT_PLUGIN_SERVER_ROOT . '/like/like-ajax.php';
 
 add_shortcode('cs_like', 'cs_like_handler');

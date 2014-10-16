@@ -1,7 +1,8 @@
 <form id="cs-email-form">
+	<?php wp_nonce_field('email_submit', 'email_submit_nonce'); ?>
 	<input type="text" placeholder="Enter email">
 	<input type="hidden" name="action" value="cs_email_submit">
-	<input type="submit" value="Submit">
+	<input type="submit" value="Submit">	
 </form>
 
 <script>
