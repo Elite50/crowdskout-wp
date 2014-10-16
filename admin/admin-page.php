@@ -31,15 +31,15 @@ if (!function_exists('cdskt_add_settings')) {
 	add_action('admin_init', 'cdskt_add_settings');
 }
 
-require CDSKT_PLUGIN_SERVER_ROOT . '/admin/sanitization.php';
-require CDSKT_PLUGIN_SERVER_ROOT . '/admin/explanations.php';
-require CDSKT_PLUGIN_SERVER_ROOT . '/admin/fields.php';
+require CSKT_PLUGIN_SERVER_ROOT . '/admin/sanitization.php';
+require CSKT_PLUGIN_SERVER_ROOT . '/admin/explanations.php';
+require CSKT_PLUGIN_SERVER_ROOT . '/admin/fields.php';
 
 if (!function_exists('cdskt_admin_page_generator')) {
 	/**
 	 * Is reponsible for generating and creating the markup for the page
 	 */
 	function cdskt_admin_page_generator() {
-		require CDSKT_PLUGIN_SERVER_ROOT . '/partials/admin-page.php';
+		require CSKT_PLUGIN_SERVER_ROOT . '/partials/admin-page.php';
 	}
 }
