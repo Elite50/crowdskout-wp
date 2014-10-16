@@ -46,5 +46,12 @@ if (!function_exists('cskt_add_analytics_js')) {
 	add_action('wp_footer', 'cskt_add_analytics_js');
 }
 
+add_action('wp_enqueue_scripts', 'cs_localize_ajax');
+function cs_localize_ajax() {
+	wp_localize_script( 'jquery', 'ajax', array('url'=>admin_url( 'admin-ajax.php' )));
+}
+
 // Reponsible for generating the settings page
 require_once CSKT_PLUGIN_SERVER_ROOT . '/admin/admin-page.php';
+require_once CSKT_PLUGIN_SERVER_ROOT . '/email/email-shortcode.php';
+require_once CSKT_PLUGIN_SERVER_ROOT . '/like/like-shortcode.php';
