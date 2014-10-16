@@ -5,7 +5,7 @@
 			e.preventDefault();
 			var clickData = $(this).data();
 			$.ajax({
-				url: ajax.url,
+				url: cs_ajax.url,
 				type: 'POST',
 				data: clickData
 			}).success(function(response) {

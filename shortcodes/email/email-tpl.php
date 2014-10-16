@@ -11,7 +11,7 @@
 		e.preventDefault();
 		var formData = $(this).serialize();
 		$.ajax({
-			url: ajax.url,
+			url: cs_ajax.url,
 			data: $(this).serialize(),
 			type: "POST"
 		}).success(function(response) {
