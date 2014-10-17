@@ -1,6 +1,6 @@
 <?php
 
-require CSKT_PLUGIN_SERVER_ROOT . '/email/email-ajax.php';
+require CSKT_PLUGIN_SERVER_ROOT . '/shortcodes/email/email-ajax.php';
 
 add_shortcode('cs_email', 'email_shortcode');
 
