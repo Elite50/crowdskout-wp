@@ -53,4 +53,4 @@ function cs_localize_ajax() {
 
 // Reponsible for generating the settings page
 require_once CSKT_PLUGIN_SERVER_ROOT . '/admin/admin-page.php';
-require_once CSKT_PLUGIN_SERVER_ROOT . '/email/shortcodes/shortcodes.php';
+require_once CSKT_PLUGIN_SERVER_ROOT . '/shortcodes/shortcodes.php';
