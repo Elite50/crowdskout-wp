@@ -1,0 +1,22 @@
+{
+  "name": "crowdskout-wp",
+  "version": "1.0.0",
+  "description": "Adds the JavaScript code needed for the [Crowdskout](http://crowdskout.com) analytics suite in the footer. Includes an admin area to enter the Source ID.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Elite50/crowdskout-wp.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Elite50/crowdskout-wp/issues"
+  },
+  "homepage": "https://github.com/Elite50/crowdskout-wp",
+  "devDependencies": {
+    "grunt": "^0.4.5"
+  }
+}
