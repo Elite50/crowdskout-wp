@@ -26,10 +26,14 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
+
 /**
  * Let's define our constants
  */
 define('CSKT_PLUGIN_SERVER_ROOT', __DIR__);
+
+//Logger
+require_once CSKT_PLUGIN_SERVER_ROOT . '/utils/logger.php';
 
 if (!function_exists('cskt_add_analytics_js')) {
 	/**
