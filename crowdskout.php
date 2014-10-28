@@ -31,6 +31,26 @@
  * Let's define our constants
  */
 define('CSKT_PLUGIN_SERVER_ROOT', __DIR__);
+define('TO_SHORTCODES_DIR', plugins_url() . '/crowdskout-wp/shortcodes');
+
+// add all scripts and styles through this function
+add_action( 'wp_enqueue_scripts', 'cskt_add_scripts' );
+function cskt_add_scripts() {
+    wp_enqueue_script( 'jquery' ); // loads jQuery's pre-registered (by Wordpress) script(s) into the plugin
+    if (!WP_DEBUG) { // use minified scripts and styles if not in debug mode, for example on live site, as opposed to dev site.
+        $flag = '.min';
+        // js
+        wp_enqueue_script('shortcodes' . $flag . '.js', TO_SHORTCODES_DIR . "/shortcodes" . $flag . ".js", array('jquery'), '', true );
+    } else { // in debug, use unminified files
+        $flag = '';
+        // js
+        wp_enqueue_script('livereload.js', "//localhost:1337/livereload.js", array('jquery'), '', true);
+        wp_enqueue_script('cskt-email.js', TO_SHORTCODES_DIR . "/email/cskt-email.js", array('jquery'), '', true );
+    }
+    // css
+    wp_enqueue_style('shortcodes' . $flag . '.css', plugins_url() . '/crowdskout-wp/shortcodes/shortcodes' . $flag . '.css');
+
+}
 
 //Logger
 require_once CSKT_PLUGIN_SERVER_ROOT . '/utils/logger.php';
@@ -58,3 +78,4 @@ function cs_localize_ajax() {
 // Reponsible for generating the settings page
 require_once CSKT_PLUGIN_SERVER_ROOT . '/admin/admin-page.php';
 require_once CSKT_PLUGIN_SERVER_ROOT . '/shortcodes/shortcodes.php';
+
