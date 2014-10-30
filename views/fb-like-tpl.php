@@ -1,7 +1,7 @@
-<a href="#" id="cs-like" data-action="cs_like_click">Like this</a>
+<a href="#" id="cs-fb-like" data-action="cs_fb_like_click">Like Us on Facebook</a>
 <script>
 	(function($) {
-		$("#cs-like").click(function(e) {
+		$("#cs-fb-like").click(function(e) {
 			e.preventDefault();
 			var clickData = $(this).data();
 			$.ajax({

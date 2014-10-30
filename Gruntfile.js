@@ -45,8 +45,8 @@ module.exports = function(grunt) {
         banner: '/*! <%= pkg.name %> <%= grunt.template.today("yyyy-mm-dd") %> */\n'
       },
       build: { // add different build tasks for different folders as you build out functionalities
-        src: ['shortcodes/**/*.js'],
-        dest: 'shortcodes/shortcodes.min.js'
+        src: 'js/master.js',
+        dest: 'js/master.min.js'
       }
     },
 
