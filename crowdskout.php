@@ -58,11 +58,9 @@ function cskt_add_scripts() {
         $flag = '';
         // js
         wp_enqueue_script('livereload.js', "//localhost:1337/livereload.js", array('jquery'), '', true);
-        wp_enqueue_script('master.js', plugins_url() . "/crowdskout-wp/js/master.js", array('jquery'), '', true );
+        wp_enqueue_script('scripts.js', plugins_url() . "/crowdskout-wp/js/scripts.js", array('jquery'), '', true );
+        //wp_enqueue_script('facebook_sdk_js.php', plugins_url() . "/crowdskout-wp/js/third_party_scripts/facebook_sdk_js.php", array('scripts.js'), '', true );
     }
-    // css
-    wp_enqueue_style('shortcodes' . $flag . '.css', plugins_url() . '/crowdskout-wp/shortcodes/shortcodes' . $flag . '.css');
-
 }
 
 // Function to grab users ip address even getting around proxies
@@ -84,11 +82,11 @@ function get_ip() {
     return $the_ip;
 }
 
-// function for adding crowdskout's ajax calls to the admin-ajax.php file
-add_action('wp_enqueue_scripts', 'cs_localize_ajax');
-function cs_localize_ajax() {
-    wp_localize_script( 'jquery', 'cs_ajax', array('url' => admin_url( 'admin-ajax.php' )));
-}
+//// function for adding crowdskout's ajax calls to the admin-ajax.php file
+//add_action('wp_enqueue_scripts', 'cs_localize_ajax');
+//function cs_localize_ajax() {
+//    wp_localize_script( 'jquery', 'cs_ajax', array('url' => admin_url( 'admin-ajax.php' )));
+//}
 
 /**
  * The main function that takes our javascript and
@@ -97,6 +95,7 @@ function cs_localize_ajax() {
 if (!function_exists('cskt_add_analytics_js')) {
 	function cskt_add_analytics_js() {
 		$sourceId = get_option('cskt_source_id');
+        $clientId = get_option('cskt_client_id');
 		
         if (is_numeric($sourceId) && 0 !== (int) $sourceId) {
 			require CSKT_PLUGIN_SERVER_ROOT . '/views/footer-js.php';
@@ -104,6 +103,19 @@ if (!function_exists('cskt_add_analytics_js')) {
 	}
 	add_action('wp_footer', 'cskt_add_analytics_js');
 }
+
+//if (!function_exists('cskt_add_facebook_sdk')) {
+//    function cskt_add_facebook_sdk() {
+//        $facebookId = get_option('cskt_facebook_app_id');
+//        $facebookSecret = get_option('cskt_facebook_app_secret');
+//
+//
+//        if (is_numeric($facebookId) && 0 !== (int)$facebookId) {
+//            require CSKT_PLUGIN_SERVER_ROOT . '/views/facebook_sdk_js.php';
+//        }
+//    }
+//    add_action('wp_head', 'cskt_add_facebook_sdk');
+//}
 
 /**
  * REGISTER SHORTCODES
@@ -113,369 +125,135 @@ if (!function_exists('cskt_add_analytics_js')) {
 add_shortcode('cs_email', 'email_shortcode');
 function email_shortcode($atts, $content = null) {
     ob_start();
+
+    // Attributes
+    extract ( shortcode_atts (
+        array('name' => 'false',), $atts )
+    );
+
+    if ($name == 'true') { $name_checkbox = true; }
+    else { $name_checkbox = false; }
+
     require CSKT_PLUGIN_SERVER_ROOT . '/views/email-tpl.php';
     return ob_get_clean();
 }
 
-// register facebook like shortcodes
-add_shortcode('cs_fb_like', 'cs_like_handler');
-function cs_like_handler($attrs, $content = null) {
-    ob_start();
-    require CSKT_PLUGIN_SERVER_ROOT . '/views/fb-like-tpl.php';
-    return ob_get_clean();
-}
-
-// register facebook share shortcodes
-add_shortcode('cs_fb_share', 'cs_fb_share_handler');
-function cs_fb_share_handler($attrs, $content = null) {
-    ob_start();
-    require CSKT_PLUGIN_SERVER_ROOT . '/views/fb-share-tpl.php';
-    return ob_get_clean();
-}
-
-// register twitter follow shortcodes
-add_shortcode('cs_tw_follow', 'cs_tw_follow_handler');
-function cs_tw_follow_handler($attrs, $content = null) {
-    ob_start();
-    require CSKT_PLUGIN_SERVER_ROOT . '/views/tw-follow-tpl.php';
-    return ob_get_clean();
-}
-
-// register twitter share shortcodes
-add_shortcode('cs_tw_share', 'cs_tw_share_handler');
-function cs_tw_share_handler($attrs, $content = null) {
-    ob_start();
-    require CSKT_PLUGIN_SERVER_ROOT . '/views/tw-share-tpl.php';
-    return ob_get_clean();
-}
+//// register facebook like shortcodes
+//add_shortcode('cs_fb_like', 'cs_like_handler');
+//function cs_like_handler($attrs, $content = null) {
+//    ob_start();
+//    require CSKT_PLUGIN_SERVER_ROOT . '/views/fb-like-tpl.php';
+//    return ob_get_clean();
+//}
+//
+//// register facebook share shortcodes
+//add_shortcode('cs_fb_share', 'cs_fb_share_handler');
+//function cs_fb_share_handler($attrs, $content = null) {
+//    ob_start();
+//    require CSKT_PLUGIN_SERVER_ROOT . '/views/fb-share-tpl.php';
+//    return ob_get_clean();
+//}
+//
+//// register twitter follow shortcodes
+//add_shortcode('cs_tw_follow', 'cs_tw_follow_handler');
+//function cs_tw_follow_handler($attrs, $content = null) {
+//    ob_start();
+//    require CSKT_PLUGIN_SERVER_ROOT . '/views/tw-follow-tpl.php';
+//    return ob_get_clean();
+//}
+//
+//// register twitter share shortcodes
+//add_shortcode('cs_tw_share', 'cs_tw_share_handler');
+//function cs_tw_share_handler($attrs, $content = null) {
+//    ob_start();
+//    require CSKT_PLUGIN_SERVER_ROOT . '/views/tw-share-tpl.php';
+//    return ob_get_clean();
+//}
 
 /**
- * REGISTER WIDGETS
+ * REGISTER CROWDSKOUT WIDGET
  */
+class cskt_widget extends WP_Widget {
 
-// EMAIL WIDGET
-class cskt_email_widget extends WP_Widget {
-
-    // create the widget object
+    // Construct widget
     function __construct() {
         parent:: __construct(
-        // Base ID
-            'cskt_email_widget',
-            // Name that appears in wordpress
-            __('Crowdskout Newsletter', 'cskt_email_widget_domain'),
-            // Description
-            array('description' => __('Send Newsletter signups to your Crowdskout app', 'cskt_email_widget_domain'),)
+          'cskt_widget',
+          __('Crowdskout Newsletter Signup', 'cskt_widget_domain'),
+          array('description' => __('Send Newsletter Signups to your Crowdskout app', 'cskt_widget_domain'),)
         );
     }
 
-    // Widget's front-end, output the contents of the widget
-    public function widget ($args, $instance) {
-        echo $args['before_widget'];
-        if ( ! empty( $instance['title'] ) ) {
-            echo $args['before_title'] . apply_filters( 'widget_title', $instance['title'] ). $args['after_title'];
+    // Widget's front-end display
+    function widget ($args, $instance) {
+
+        extract( $args );
+
+        $name_checkbox = $instance['name_checkbox'] ? true : false;
+
+        echo $before_widget;
+
+        if ( ! empty( $instance['title']  ) ) {
+            echo $before_title . apply_filters( 'widget_title', $instance['title'] ). $after_title;
         }
+
+//        $this->widget_title = apply_filters('widget_title', $instance['title'] );
+
+//        $this->facebook_id = $instance['app_id'];
+//        $this->facebook_username = $instance['page_name'];
+//        $this->facebook_width = $instance['width'];
+//        $this->facebook_show_faces = ($instance['show_faces'] == "1" ? "true" : "false");
+//        $this->facebook_stream = ($instance['show_stream'] == "1" ? "true" : "false");
+//        $this->facebook_header = ($instance['show_header'] == "1" ? "true" : "false");
+//
+//        add_action('wp_footer', array(&$this,'add_js'));
+
         require CSKT_PLUGIN_SERVER_ROOT . '/views/email-tpl.php';
-        echo $args['after_widget'];
+//        require CSKT_PLUGIN_SERVER_ROOT . '/views/fb-like-tpl.php';
+//        require CSKT_PLUGIN_SERVER_ROOT . '/views/fb-share-tpl.php';
+//        require CSKT_PLUGIN_SERVER_ROOT . '/views/tw-follow-tpl.php';
+//        require CSKT_PLUGIN_SERVER_ROOT . '/views/tw-share-tpl.php';
+
+        echo $after_widget;
+    }
+
+    // sanitize widget, take the user settings and save them
+    public function update( $new_instance, $old_instance ) {
+        $instance = array();
+        $instance['title'] = ( ! empty( $new_instance['title'] ) ) ? strip_tags( $new_instance['title'] ) : '';
+        $instance['name_checkbox'] = $new_instance['name_checkbox'];
+        return $instance;
     }
 
     // Widget's back-end, Appearance->Widgets
     public function form( $instance ) {
-        if ( isset( $instance[ 'title' ] ) ) {
-            $title = $instance[ 'title' ];
-        }
-        else {
-            $title = __( '', 'cskt_email_widget_domain' );
-        }
-        ?>
-        <p>
-            <label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e( 'Title:' ); ?></label>
-            <input class="widefat" id="<?php echo $this->get_field_id( 'title' ); ?>" name="<?php echo $this->get_field_name( 'title' ); ?>" type="text" value="<?php echo esc_attr( $title ); ?>">
-        </p>
-    <?php
-    }
 
-    // Updating widget replacing old instances with new
-    public function update( $new_instance, $old_instance ) {
-        $instance = array();
-        $instance['title'] = ( ! empty( $new_instance['title'] ) ) ? strip_tags( $new_instance['title'] ) : '';
-        return $instance;
+        if ( isset( $instance[ 'title' ] ) ) { $title = $instance[ 'title' ]; }
+        else { $title = __( '', 'cskt_widget_domain' ); }
+
+        if ( isset ( $instance[ 'name_checkbox' ] ) ) { $name_checkbox = true; }
+        else { $name_checkbox = false; }
+
+        ?>
+            <?php require CSKT_PLUGIN_SERVER_ROOT . '/views/cskt-widget-backend.php'; ?>
+        <?php
+
     }
 }
-// register email widget
+
+// call the crowdskout widget class
 add_action( 'widgets_init', function(){
-    register_widget( 'cskt_email_widget' );
+    register_widget( 'cskt_widget' );
 });
 
-// FACEBOOK LIKE WIDGET
-class cskt_fb_like_widget extends WP_Widget {
-
-    // create the widget object
-    function __construct() {
-        parent:: __construct(
-        // Base ID
-            'cskt_fb_like_widget',
-            // Name that appears in wordpress
-            __('Crowdskout Facebook Like Button', 'cskt_fb_like_widget_domain'),
-            // Description
-            array('description' => __('Send Facebook Likes to your Crowdskout app', 'cskt_fb_like_widget_domain'),)
-        );
-    }
-
-    // Widget's front-end, output the contents of the widget
-    public function widget ($args, $instance) {
-        echo $args['before_widget'];
-        if ( ! empty( $instance['title'] ) ) {
-            echo $args['before_title'] . apply_filters( 'widget_title', $instance['title'] ). $args['after_title'];
-        }
-        require CSKT_PLUGIN_SERVER_ROOT . '/views/fb-like-tpl.php';
-        echo $args['after_widget'];
-    }
-
-    // Widget's back-end, Appearance->Widgets
-    public function form( $instance ) {
-        if ( isset( $instance[ 'title' ] ) ) {
-            $title = $instance[ 'title' ];
-        }
-        else {
-            $title = __( '', 'cskt_fb_like_widget_domain' );
-        }
-        ?>
-        <p>
-            <label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e( 'Title:' ); ?></label>
-            <input class="widefat" id="<?php echo $this->get_field_id( 'title' ); ?>" name="<?php echo $this->get_field_name( 'title' ); ?>" type="text" value="<?php echo esc_attr( $title ); ?>">
-        </p>
-    <?php
-    }
-
-    // Updating widget replacing old instances with new
-    public function update( $new_instance, $old_instance ) {
-        $instance = array();
-        $instance['title'] = ( ! empty( $new_instance['title'] ) ) ? strip_tags( $new_instance['title'] ) : '';
-        return $instance;
-    }
-}
-// register fb like widget
-add_action( 'widgets_init', function(){
-    register_widget( 'cskt_fb_like_widget' );
-});
-
-// TWITTER FOLLOW WIDGET
-class cskt_tw_follow_widget extends WP_Widget {
-
-    // create the widget object
-    function __construct() {
-        parent:: __construct(
-        // Base ID
-            'cskt_tw_follow_widget',
-            // Name that appears in wordpress
-            __('Crowdskout Twitter Follow Button', 'cskt_email_widget_domain'),
-            // Description
-            array('description' => __('Send Twitter follows to your Crowdskout app', 'cskt_tw_follow_widget_domain'),)
-        );
-    }
-
-    // Widget's front-end, output the contents of the widget
-    public function widget ($args, $instance) {
-        echo $args['before_widget'];
-        if ( ! empty( $instance['title'] ) ) {
-            echo $args['before_title'] . apply_filters( 'widget_title', $instance['title'] ). $args['after_title'];
-        }
-        require CSKT_PLUGIN_SERVER_ROOT . '/views/tw-follow-tpl.php';
-        echo $args['after_widget'];
-    }
-
-    // Widget's back-end, Appearance->Widgets
-    public function form( $instance ) {
-        if ( isset( $instance[ 'title' ] ) ) {
-            $title = $instance[ 'title' ];
-        }
-        else {
-            $title = __( '', 'cskt_tw_follow_widget_domain' );
-        }
-        ?>
-        <p>
-            <label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e( 'Title:' ); ?></label>
-            <input class="widefat" id="<?php echo $this->get_field_id( 'title' ); ?>" name="<?php echo $this->get_field_name( 'title' ); ?>" type="text" value="<?php echo esc_attr( $title ); ?>">
-        </p>
-    <?php
-    }
-
-    // Updating widget replacing old instances with new
-    public function update( $new_instance, $old_instance ) {
-        $instance = array();
-        $instance['title'] = ( ! empty( $new_instance['title'] ) ) ? strip_tags( $new_instance['title'] ) : '';
-        return $instance;
-    }
-}
-// register email widget
-add_action( 'widgets_init', function(){
-    register_widget( 'cskt_tw_follow_widget' );
-});
-
-// FACEBOOK SHARE WIDGET
-class cskt_fb_share_widget extends WP_Widget {
-
-    // create the widget object
-    function __construct() {
-        parent:: __construct(
-        // Base ID
-            'cskt_fb_share_widget',
-            // Name that appears in wordpress
-            __('Crowdskout Facebook Share Button', 'cskt_fb_share_widget_domain'),
-            // Description
-            array('description' => __('Send Facebook Shares to your Crowdskout app', 'cskt_fb_share_widget_domain'),)
-        );
-    }
-
-    // Widget's front-end, output the contents of the widget
-    public function widget ($args, $instance) {
-        echo $args['before_widget'];
-        if ( ! empty( $instance['title'] ) ) {
-            echo $args['before_title'] . apply_filters( 'widget_title', $instance['title'] ). $args['after_title'];
-        }
-        require CSKT_PLUGIN_SERVER_ROOT . '/views/fb-share-tpl.php';
-        echo $args['after_widget'];
-    }
-
-    // Widget's back-end, Appearance->Widgets
-    public function form( $instance ) {
-        if ( isset( $instance[ 'title' ] ) ) {
-            $title = $instance[ 'title' ];
-        }
-        else {
-            $title = __( '', 'cskt_fb_share_widget_domain' );
-        }
-        ?>
-        <p>
-            <label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e( 'Title:' ); ?></label>
-            <input class="widefat" id="<?php echo $this->get_field_id( 'title' ); ?>" name="<?php echo $this->get_field_name( 'title' ); ?>" type="text" value="<?php echo esc_attr( $title ); ?>">
-        </p>
-    <?php
-    }
-
-    // Updating widget replacing old instances with new
-    public function update( $new_instance, $old_instance ) {
-        $instance = array();
-        $instance['title'] = ( ! empty( $new_instance['title'] ) ) ? strip_tags( $new_instance['title'] ) : '';
-        return $instance;
-    }
-}
-// register fb share widget
-add_action( 'widgets_init', function(){
-    register_widget( 'cskt_fb_share_widget' );
-});
-
-// TWITTER SHARE WIDGET
-class cskt_tw_share_widget extends WP_Widget {
-
-    // create the widget object
-    function __construct() {
-        parent:: __construct(
-        // Base ID
-            'cskt_tw_share_widget',
-            // Name that appears in wordpress
-            __('Crowdskout Twitter Share Button', 'cskt_tw_share_widget_domain'),
-            // Description
-            array('description' => __('Send Twitter Shares to your Crowdskout app', 'cskt_tw_share_widget_domain'),)
-        );
-    }
-
-    // Widget's front-end, output the contents of the widget
-    public function widget ($args, $instance) {
-        echo $args['before_widget'];
-        if ( ! empty( $instance['title'] ) ) {
-            echo $args['before_title'] . apply_filters( 'widget_title', $instance['title'] ). $args['after_title'];
-        }
-        require CSKT_PLUGIN_SERVER_ROOT . '/views/tw-share-tpl.php';
-        echo $args['after_widget'];
-    }
-
-    // Widget's back-end, Appearance->Widgets
-    public function form( $instance ) {
-        if ( isset( $instance[ 'title' ] ) ) {
-            $title = $instance[ 'title' ];
-        }
-        else {
-            $title = __( '', 'cskt_tw-share_widget_domain' );
-        }
-        ?>
-        <p>
-            <label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e( 'Title:' ); ?></label>
-            <input class="widefat" id="<?php echo $this->get_field_id( 'title' ); ?>" name="<?php echo $this->get_field_name( 'title' ); ?>" type="text" value="<?php echo esc_attr( $title ); ?>">
-        </p>
-    <?php
-    }
-
-    // Updating widget replacing old instances with new
-    public function update( $new_instance, $old_instance ) {
-        $instance = array();
-        $instance['title'] = ( ! empty( $new_instance['title'] ) ) ? strip_tags( $new_instance['title'] ) : '';
-        return $instance;
-    }
-}
-// register tw share widget
-add_action( 'widgets_init', function(){
-    register_widget( 'cskt_tw_share_widget' );
-});
-
-/**
- * AJAX HANDLERS
- */
-
-// Ajax handlers for the newsletter widget and shortcode
-add_action('wp_ajax_cskt_email_submit', 'cskt_email_submit_handler');
-add_action('wp_ajax_no_priv_cskt_email_submit', 'cskt_email_submit_handler');
-
-function cskt_email_submit_handler() {
-    // get the meta data
-    $email = $_REQUEST['signup-email'];
-    $ip = get_ip();
-    $csid = $_COOKIE['csid'];
-
-    //error check
-    if(!wp_verify_nonce($_REQUEST['email_submit_nonce'], 'email_submit')) {
-        $status = 'error';
-        $message = 'something went wrong, please try again';
-        $result = array('status' => $status, 'message' => $message);
-        echo json_encode($result);
-        exit();
-    }
-
-    if (empty($email)) {
-        $status = 'error';
-        $message = "You did not enter an email address!";
-    } else if(!preg_match('/^[^\W][a-zA-Z0-9_]+(\.[a-zA-Z0-9_]+)*\@[a-zA-Z0-9_]+(\.[a-zA-Z0-9_]+)*\.[a-zA-Z]{2,4}$/', $email)){ //validate email address - check if is a valid email address
-        $status = "error";
-        $message = "You have entered an invalid email address!";
-    } else {
-        $status = 'success';
-        $message = "Thanks for your email!  You've been signed up for the newsletter.";
-    }
-
-    // send json object back to client side!
-    $result = array(
-        'status' => $status,
-        'message' => $message
-    );
-    echo json_encode($result);
-
-
-    // Send data to crowdskout on success
-    if ($status == 'success') {
-        //TODO: Send to crowdskout
-    }
-
-    exit();
-}
-
-// AJAX HANDLERS for the facebook like widget and shortcode
-add_action('wp_ajax_cs_like_click', 'cs_like_click_handler');
-add_action('wp_ajax_no_priv_cs_like_click', 'cs_like_click_handler');
-
-//TODO: Add nonce check
-//TODO: Send to crowdskout
-function cs_like_click_handler() {
-    $_POST['csid'] = $_COOKIE['csid'];
-    echo json_encode($_POST);
-    exit();
-}
+//// AJAX HANDLERS for the facebook like widget and shortcode
+//add_action('wp_ajax_cs_like_click', 'cs_like_click_handler');
+//add_action('wp_ajax_no_priv_cs_like_click', 'cs_like_click_handler');
+//
+////TODO: Add nonce check
+////TODO: Send to crowdskout
+//function cs_like_click_handler() {
+//    $_POST['csid'] = $_COOKIE['csid'];
+//    echo json_encode($_POST);
+//    exit();
+//}

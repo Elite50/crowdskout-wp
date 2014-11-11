@@ -45,13 +45,13 @@ module.exports = function(grunt) {
         banner: '/*! <%= pkg.name %> <%= grunt.template.today("yyyy-mm-dd") %> */\n'
       },
       build: { // add different build tasks for different folders as you build out functionalities
-        src: 'js/master.js',
+        src: 'js/scripts.js',
         dest: 'js/master.min.js'
       }
     },
 
     jshint: { // test code give hints for errors
-      files: ['Gruntfile.js', 'shortcodes.**/*.js'],  // files to lint
+      files: ['Gruntfile.js', '**/*.js'],  // files to lint
       options: {  // options to override jshint default
         globals: {
           jQuery: true,
