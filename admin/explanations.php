@@ -16,6 +16,6 @@ if (!function_exists('cskt_social_media_explain')) {
      * The explanation for the settings we need for social media tracking.
      */
     function cskt_social_media_explain() {
-        _e('The settings we need to start tracking newsletter signups, facebook likes, tweets, shares, follows, etc.', 'crowdskout');
+        _e('The settings we need to start tracking newsletter sign-ups', 'crowdskout');
     }
 }
