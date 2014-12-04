@@ -4,9 +4,9 @@
     if (is_numeric($sourceId) && is_numeric($clientId) && 0 !== (int) $sourceId) {
         ?>
         <script>
-            var sourceId = <?php echo $clientId; ?>;
-            var clientId = <?php echo $sourceId; ?>;
-            (function(l,o,v,e) { l.ownerid = sourceId;l.clientId = clientId;a=o.getElementsByTagName(v)[0];b=o.createElement(v);b.src=e;a.parentNode.insertBefore(b,a);})(window, document, 'script', 'https://staging-api.crowdskout.com/analytics.js');
+            var sourceId = <?php echo $sourceId; ?>;
+            var clientId = <?php echo $clientId; ?>;
+            (function(l,o,v,e) { l.ownerid = sourceId;l.clientid = clientId;a=o.getElementsByTagName(v)[0];b=o.createElement(v);b.src=e;a.parentNode.insertBefore(b,a);})(window, document, 'script', 'https://staging-api.crowdskout.com/analytics.js');
         </script>
         <?php
     }

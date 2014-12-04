@@ -30,11 +30,14 @@
 
     require_once CSKT_PLUGIN_SERVER_ROOT . '/utils/logger.php'; // Util functions for dev
     require_once CSKT_PLUGIN_SERVER_ROOT . '/admin/admin-page.php'; // Responsible for generating the settings page
-    require_once CSKT_PLUGIN_SERVER_ROOT . '/widget.php'; // Widgets
+    require_once CSKT_PLUGIN_SERVER_ROOT . '/widget.php';
     require_once CSKT_PLUGIN_SERVER_ROOT . '/shortcode.php';
 
     if (!function_exists('cskt_add_scripts')) {
         add_action( 'wp_enqueue_scripts', 'cskt_add_scripts' );
+        /**
+         * add crowdskout scripts and styles
+         */
         function cskt_add_scripts() {
             if (!WP_DEBUG) {
                 $flag = '.min';
@@ -50,7 +53,6 @@
      * The main function that takes cskts javascript and
      * adds it to the footer of the application for tracking.
      */
-
     if (!function_exists('cskt_add_analytics_js')) {
         function cskt_add_analytics_js() {
             require CSKT_PLUGIN_SERVER_ROOT . '/views/footer-js.php';

@@ -1,30 +1,38 @@
 <?php
-    class cskt_widget extends WP_Widget {
+    class CSKT_Widget extends WP_Widget {
 
-        //construct
-        function __construct() {
+        /**
+         * construct
+         */
+        public function __construct() {
             parent:: __construct(
-                'cskt_widget',
+                'CSKT_Widget',
                 __('Crowdskout Newsletter Signup', 'cskt_widget_domain'),
-                array('description' => __('Send Newsletter Signups to your Crowdskout app', 'cskt_widget_domain'),)
+                array('description' => __('Send Newsletter Sign-ups to your Crowdskout app', 'cskt_widget_domain'),)
             );
         }
 
-        //front
-        function widget ($args, $instance) {
+        /**
+         * @param array $args
+         * @param array $instance
+         */
+        public function widget ($args, $instance) {
 
-            extract( $args );
             $name_checkbox = $instance['name_checkbox'] ? true : false;
             if ( ! empty( $instance['title']  ) ) {
-                echo $before_title . apply_filters( 'widget_title', $instance['title'] ). $after_title;
+                echo $args['before_title'] . apply_filters( 'widget_title', $instance['title'] ). $args['after_title'];
             }
 
-            echo $before_widget;
+            echo $args['before_widget'];
             require CSKT_PLUGIN_SERVER_ROOT . '/views/email-tpl.php';
-            echo $after_widget;
+            echo $args['after_widget'];
         }
 
-        //save instance
+        /**
+         * @param array $new_instance
+         * @param array $old_instance
+         * @return array
+         */
         public function update( $new_instance, $old_instance ) {
             $instance = array();
             $instance['title'] = ( ! empty( $new_instance['title'] ) ) ? strip_tags( $new_instance['title'] ) : '';
@@ -32,7 +40,10 @@
             return $instance;
         }
 
-        //back
+        /**
+         * @param array $instance
+         * @return string|void
+         */
         public function form( $instance ) {
 
             if ( isset( $instance[ 'title' ] ) ) { $title = $instance[ 'title' ]; }
@@ -40,17 +51,16 @@
             if ( isset ( $instance[ 'name_checkbox' ] ) ) { $name_checkbox = true; }
             else { $name_checkbox = false; }
 
-            ?>
-            <?php require CSKT_PLUGIN_SERVER_ROOT . '/views/cskt-widget-backend.php'; ?>
-            <?php
+            require CSKT_PLUGIN_SERVER_ROOT . '/views/cskt-widget-backend.php';
         }
-
     }
 
-    //register
-    if (!function_exists('cskt_widget')) {
+    /**
+     * register
+     */
+    if (!function_exists('register_cskt_widget')) {
         function register_cskt_widget() {
-            register_widget('cskt_widget');
+            register_widget('CSKT_Widget');
         }
         add_action( 'widgets_init', 'register_cskt_widget' );
     }
