@@ -17,21 +17,27 @@ if (!function_exists('cskt_add_settings')) {
 	 * Registering our settings
 	 */
 	function cskt_add_settings() {
-		// Registering the actual values
+        /**
+         * Registering the actual values
+         */
 		register_setting('cskt_plugin', 'cskt_source_id', 'cskt_sanitize_integer');
         register_setting('cskt_plugin', 'cskt_client_id', 'cskt_sanitize_integer');
         register_setting('cskt_plugin', 'cskt_facebook_app_id');
         register_setting('cskt_plugin', 'cskt_facebook_app_secret');
 
-		// Registering sections
-		add_settings_section('cskt_pageviews', 'Pageview Tracking', 'cskt_pageview_explain', 'crowdskout');
-		add_settings_section('cskt_social_media', 'Social Media Tracking', 'cskt_social_media_explain', 'crowdskout');
+		/**
+         * Registering sections
+         */
+        add_settings_section('cskt_pageviews', 'Pageview Tracking', 'cskt_pageview_explain', 'crowdskout');
+		add_settings_section('cskt_newsletter', 'Newsletter Tracking', 'cskt_newsletter_explain', 'crowdskout');
 
-		// Registering fields
+        /**
+         * Registering fields
+         */
 		add_settings_field('cskt_source_id', 'Source ID', 'cskt_input_number', 'crowdskout', 'cskt_pageviews', array(
 			'name' => 'cskt_source_id'
 		));
-        add_settings_field('cskt_client_id', 'Client ID', 'cskt_input_number', 'crowdskout', 'cskt_social_media', array(
+        add_settings_field('cskt_client_id', 'Client ID', 'cskt_input_number', 'crowdskout', 'cskt_newsletter', array(
 			'name' => 'cskt_client_id'
 		));
         add_settings_field('cskt_facebook_app_id', 'Facebook App ID', 'cskt_input_number', 'crowdskout', 'cskt_social_media', array(
