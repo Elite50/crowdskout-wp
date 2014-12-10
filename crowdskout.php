@@ -71,7 +71,7 @@
                 $cskt_request = json_encode($cskt_request);
 
                 /** Send Request to the Crowdskout Database */
-                $cskt_api_host = "https://private-ef7b0-crowdskoutbackend.apiary-mock.com/pages/topics";
+                $cskt_api_host = "https://api.crowdskout.com//pages/topics";
                 $request = new WP_Http;
                 $result = $request->request($cskt_api_host, array('method' => $type, 'headers' => array('Content-Type' => 'application/json'), 'body' => $cskt_request));
 //                _log($result);
