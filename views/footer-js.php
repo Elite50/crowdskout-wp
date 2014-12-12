@@ -1,7 +1,7 @@
 <?php
     $sourceId = get_option('cskt_source_id');
     $clientId = get_option('cskt_client_id');
-    if (is_numeric($sourceId) && is_numeric($clientId) && 0 !== (int) $sourceId) {
+    if (is_numeric($sourceId) && is_numeric($clientId) && 0 !== (int) $sourceId && 0 !== (int) $clientId) {
         ?>
         <script>
             var sourceId = <?php echo $sourceId; ?>;

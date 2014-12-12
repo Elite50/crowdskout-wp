@@ -2,19 +2,20 @@
     class CSKT_Widget extends WP_Widget {
 
         /**
-         * construct
+         * construct crowdskout widget extended from the wordpress widget.
+         * Gets called automatically on register of CSKT_Widget.
          */
         public function __construct() {
             parent:: __construct(
                 'CSKT_Widget',
-                __('Crowdskout Newsletter Signup', 'cskt_widget_domain'),
-                array('description' => __('Send Newsletter Sign-ups to your Crowdskout app', 'cskt_widget_domain'),)
+                __('Crowdskout Widget', 'cskt_widget_domain'),
+                array('description' => __('Send site newsletter sign-ups and social media interactions to your Crowdskout app for data analytics, segmentation and marketing.', 'cskt_widget_domain'),)
             );
         }
 
         /**
-         * @param array $args
-         * @param array $instance
+         * @param array $args -> arguments
+         * @param array $instance -> database values
          */
         public function widget ($args, $instance) {
 
@@ -29,9 +30,9 @@
         }
 
         /**
-         * @param array $new_instance
-         * @param array $old_instance
-         * @return array
+         * @param array $new_instance -> values to be saved
+         * @param array $old_instance -> previously saved values from db.
+         * @return array -> updated safe values to be saved
          */
         public function update( $new_instance, $old_instance ) {
             $instance = array();
@@ -41,7 +42,7 @@
         }
 
         /**
-         * @param array $instance
+         * @param array $instance -> previously saved values from db
          * @return string|void
          */
         public function form( $instance ) {
@@ -56,7 +57,7 @@
     }
 
     /**
-     * register
+     * register cskt_widget
      */
     if (!function_exists('register_cskt_widget')) {
         function register_cskt_widget() {
