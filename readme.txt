@@ -3,7 +3,7 @@ Contributors: GYatesIII
 Tags: analytics, crowdskout
 Requires at least: 3.0.1
 Tested up to: 4.0
-Stable tag: 1.1.1
+Stable tag: 1.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -11,7 +11,7 @@ Easily add the Crowdskout analytics suite to any WordPress site.
 
 == Description ==
 
-With a simple installation, this plugin adds [Crowdskout](http://crowdskout.com)'s Analytics JavaScript to the footer of any WordPress site.  With the 1.1 build, additional functionality for Crowdskout track-able newsletter sign-up widgets and shortcodes is added.  With the 1.1.1 build, tags and category tracking is integrated into pageviews.
+With a simple installation, this plugin adds [Crowdskout](http://crowdskout.com)'s Analytics JavaScript to the footer of any WordPress site, Crowdskout track-able newsletter sign-up widgets and shortcodes, and with the 1.2 build, tags and categories tracking is integrated into pageviews.
 
 = Crowdskout Pageview Analytics =
 After entering in the appropriate client details, pageviews with categories and tags will be automatically tracked by the plugin.
@@ -28,7 +28,7 @@ To add a Crowdskout Newsletter shortcode, enter `[cskt_newsletter]` into the pos
 
 == Changelog ==
 
-= 1.1.1 =
+= 1.2 =
 * Categories and Tags integrated into pageview tracking
 
 = 1.1 =
