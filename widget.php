@@ -1,4 +1,48 @@
 <?php
+	class CSKT_Widget_Interface {
+
+		private $cskt_widget_factory;
+
+		public function __construct() {
+			$this->cskt_widget_factory = new CSKT_Widget_Factory();
+		}
+
+		public function cskt_get_inputs( $inputs ) {
+			return $this->cskt_widget_factory->cskt_get_inputs( $inputs );
+		}
+	}
+
+	abstract class CSKT_Build_Module {
+
+		private $parts;
+
+		public function __construct( $parts ) {
+			$this->parts = $parts;
+		}
+
+		abstract public function cskt_get_parts();
+	}
+
+
+	class CSKT_Widget_Factory {
+
+		public function cskt_get_inputs( $inputs ) {
+
+			if (in_array('newsletter', $inputs )) {
+				$cskt_widget->$newsletter_mod = new $module('newsletter');
+			} elseif (in_array('facebook_like', $inputs)) {
+				$cskt_widget->$facebook_like_mod = new $module('facebook_like');
+			} elseif (in_array('facebook_share', $inputs)) {
+				$cskt_widget->$facebook_share_mod = new $module('facebook_share');
+			} elseif (in_array('twitter_follow', $inputs)) {
+				$cskt_widget->$twitter_follow_mod = new $module('twitter_follow');
+			} elseif (in_array('twitter_share', $inputs)) {
+				$cskt_widget->$twitter_share_mod = new $module('twitter_share');
+			}
+			return $cskt_widget;
+		}
+	}
+
     class CSKT_Widget extends WP_Widget {
 
         /**
