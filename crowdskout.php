@@ -38,21 +38,40 @@
     if( !class_exists( 'WP_Http' ) )
         include_once( ABSPATH . WPINC. '/class-http.php' );
 
-    /** add crowdskout scripts and styles */
+	/** add crowdskout scripts and styles */
+	if (!function_exists('cskt_debug')) {
+		/**
+		 * @return string
+		 */
+		function cskt_debug() {
+			if ( ! WP_DEBUG ) {
+				return '.min';
+			} else {
+				wp_enqueue_script( 'livereload.js', "//localhost:1337/livereload.js", array( 'jquery' ), '', true );
+				return '';
+			}
+		}
+	}
+
     if (!function_exists('cskt_add_scripts')) {
         add_action( 'wp_enqueue_scripts', 'cskt_add_scripts' );
         function cskt_add_scripts() {
-            if (!WP_DEBUG) {
-                $flag = '.min';
-            } else {
-                $flag = '';
-                wp_enqueue_script('livereload.js', "//localhost:1337/livereload.js", array('jquery'), '', true);
-            }
-	        wp_enqueue_script('cskt' . $flag . '.js', plugins_url() . "/crowdskout-wp/js/cskt" . $flag . ".js", array('jquery'), '', true );
-            wp_enqueue_script('forms_js_interface' . $flag . '.js', plugins_url() . "/crowdskout-wp/js/forms_js_interface" . $flag . ".js", array('jquery'), '', true );
-            wp_enqueue_script('fb_sdk_js_interface' . $flag . '.js', plugins_url() . "/crowdskout-wp/js/fb_sdk_js_interface" . $flag . ".js", array('jquery'), '', true );
+	        $flag = cskt_debug();
+	        wp_enqueue_script('cskt', plugins_url() . '/crowdskout-wp/js/cskt' . $flag . '.js', array('jquery'), '', true );
+            wp_enqueue_script('forms_js_interface', plugins_url() . '/crowdskout-wp/js/forms_js_interface' . $flag . '.js', array('jquery'), '', true );
+            wp_enqueue_script('fb_sdk_js_interface', plugins_url() . '/crowdskout-wp/js/fb_sdk_js_interface' . $flag . '.js', array('jquery'), '', true );
         }
     }
+
+	if (!function_exists('cskt_add_admin_scripts')) {
+		add_action( 'admin_enqueue_scripts', 'cskt_add_admin_scripts' );
+		function cskt_add_admin_scripts() {
+			$flag = cskt_debug();
+			wp_enqueue_script('cskt_js', plugins_url() . '/crowdskout-wp/js/cskt' . $flag . '.js', array('jquery','jquery-ui-sortable'), '', true);
+			wp_enqueue_script('accordionmenu', plugins_url() . '/crowdskout-wp/js/cskt-accordionmenu' . $flag . '.js', array('cskt_js'), '', true);
+			wp_enqueue_style('cskt_css', plugins_url() . '/crowdskout-wp/css/cskt.css');
+		}
+	}
 
     /**
      * The main function that takes cskts javascript and

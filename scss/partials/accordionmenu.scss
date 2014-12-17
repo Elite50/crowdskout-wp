@@ -1,0 +1,251 @@
+// cskt accordion widget menu
+
+//@extend-elements
+//original selectors
+//#accordionmenu, #accordionmenu ul, #accordionmenu ul li, #accordionmenu ul li a
+%extend_1 {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  list-style: none;
+  line-height: 1;
+  display: block;
+  position: relative;
+  //Instead of the line below you could use @includebox-sizing($bs)
+  box-sizing: border-box;
+}
+
+//original selectors
+//#accordionmenu > ul > li > a:hover, #accordionmenu > ul > li.active > a, #accordionmenu > ul > li.open > a
+%extend_2 {
+  color: $white;
+  background: $cskt_grey;
+  background: linear-gradient($cskt_grey, $cskt_grey);
+}
+
+//original selectors
+//.holder::after, .holder::before
+%extend_3 {
+  display: block;
+  position: absolute;
+  content: "";
+  width: 6px;
+  height: 6px;
+  right: 20px;
+  z-index: 10;
+  //Instead of the line below you could use @includetransform($scale, $rotate, $transx, $transy, $skewx, $skewy, $originx, $originy)
+  transform: rotate(-135deg);
+}
+
+%extend_4 {
+  color: $white;
+  background: $cskt_blue;
+  background: linear-gradient($cskt_blue, $cskt_blue);
+  border-bottom: 1px solid $color_lochmara_approx;
+  + ul {
+    background: $cskt_blue_down;
+  }
+}
+
+#accordionmenu {
+  @extend %extend_1;
+  width: 100%;
+  //font-family: $font_0, $font_1, $font_2;
+  color: $white;
+  ul {
+    @extend %extend_1;
+    li {
+      @extend %extend_1;
+      a {
+        @extend %extend_1;
+      }
+      a:hover {
+        border: 1px solid black !important;
+      }
+    }
+    ul {
+      display: none;
+      padding-right: 21px;
+      padding-left: 21px;
+      padding-top: 10px;
+      padding-bottom: 10px;
+      background: $cskt_border_grey;
+      li {
+        a {
+          cursor: pointer;
+          border-bottom: 1px solid $color_tuna_approx;
+          border-left: 1px solid $color_tuna_approx;
+          border-right: 1px solid $color_tuna_approx;
+          padding: 10px 20px;
+          z-index: 1;
+          text-decoration: none;
+          font-size: 13px;
+          color: $color_gallery_approx;
+          background: $color_trout_approx;
+          //Instead of the line below you could use @includebox-shadow($shadow-1, $shadow-2, $shadow-3, $shadow-4, $shadow-5, $shadow-6, $shadow-7, $shadow-8, $shadow-9, $shadow-10)
+          box-shadow: inset 0 1px 0 $white_10;
+        }
+        &:hover > a {
+          background: $color_mako_approx;
+          color: $white;
+        }
+        &.open > a {
+          background: $color_mako_approx;
+          color: $white;
+          &::after {
+            border-color: $white;
+          }
+        }
+        &.active > a {
+          background: $color_mako_approx;
+          color: $white;
+          &::after {
+            border-color: $white;
+          }
+        }
+        &:first-child > a {
+          //Instead of the line below you could use @includebox-shadow($shadow-1, $shadow-2, $shadow-3, $shadow-4, $shadow-5, $shadow-6, $shadow-7, $shadow-8, $shadow-9, $shadow-10)
+          box-shadow: none;
+        }
+        &.has-sub > a::after {
+          display: block;
+          position: absolute;
+          content: "";
+          width: 5px;
+          height: 5px;
+          right: 20px;
+          z-index: 10;
+          top: 11.5px;
+          border-top: 2px solid $color_gallery_approx;
+          border-left: 2px solid $color_gallery_approx;
+          //Instead of the line below you could use @includetransform($scale, $rotate, $transx, $transy, $skewx, $skewy, $originx, $originy)
+          transform: rotate(-135deg);
+        }
+        > a:hover::after {
+          border-color: $white;
+        }
+      }
+      ul li {
+        a {
+          padding-left: 30px;
+        }
+        &:first-child > a {
+          //Instead of the line below you could use @includebox-shadow($shadow-1, $shadow-2, $shadow-3, $shadow-4, $shadow-5, $shadow-6, $shadow-7, $shadow-8, $shadow-9, $shadow-10)
+          box-shadow: inset 0 1px 0 $white_10;
+        }
+      }
+    }
+  }
+  > ul > li {
+    > {
+      a {
+        padding: 15px 11px;
+        border-bottom: 1px solid $cskt_border_grey;
+        border-left: 1px solid $cskt_border_grey;
+        border-right: 1px solid $cskt_border_grey;
+//        border-left: 1px solid $color_lochmara_approx;
+//        border-right: 1px solid $color_lochmara_approx;
+//        border-top: 1px solid $color_lochmara_approx;
+        cursor: pointer;
+        z-index: 2;
+        font-size: 14px;
+        font-weight: bold;
+        text-decoration: none;
+        color: $white;
+        //Instead of the line below you could use @includetext-shadow($shadow-1, $shadow-2, $shadow-3, $shadow-4, $shadow-5, $shadow-6, $shadow-7, $shadow-8, $shadow-9, $shadow-10)
+        text-shadow: 0 1px 1px $black_35;
+        background: $color_picton_blue_approx;
+        background: linear-gradient($color_picton_blue_approx, $color_curious_blue_approx);
+        //Instead of the line below you could use @includebox-shadow($shadow-1, $shadow-2, $shadow-3, $shadow-4, $shadow-5, $shadow-6, $shadow-7, $shadow-8, $shadow-9, $shadow-10)
+        box-shadow: inset 0 1px 0 $white_15;
+        &:hover {
+          @extend %extend_2;
+          cursor: move;
+          > span::after {
+            border-color: $color_gallery_approx;
+          }
+        }
+      }
+      ul > li {
+        &.last {
+          > a {
+            border-bottom: 0;
+          }
+          &.open > a {
+            border-bottom: 1px solid $color_tuna_approx;
+          }
+        }
+        &:last-child > a {
+          border-bottom: 0;
+        }
+        &.open:last-child > {
+          a {
+            border-bottom: 1px solid $color_tuna_approx;
+          }
+          ul > li:last-child > a {
+            border-bottom: 0;
+          }
+        }
+      }
+    }
+    &.active > a {
+      @extend %extend_2;
+      > span::after {
+        border-color: $color_gallery_approx;
+      }
+    }
+    &.open > a {
+      @extend %extend_2;
+      //Instead of the line below you could use @includebox-shadow($shadow-1, $shadow-2, $shadow-3, $shadow-4, $shadow-5, $shadow-6, $shadow-7, $shadow-8, $shadow-9, $shadow-10)
+      box-shadow: inset 0 1px 0 $white_15, 0 1px 1px $black_15;
+      border-bottom: 1px solid grey;
+      > span::after {
+        border-color: $color_gallery_approx;
+      }
+    }
+    &.has-sub > a.cskt_activate {
+      @extend %extend_4;
+      //Instead of the line below you could use @includebox-shadow($shadow-1, $shadow-2, $shadow-3, $shadow-4, $shadow-5, $shadow-6, $shadow-7, $shadow-8, $shadow-9, $shadow-10)
+      box-shadow: inset 0 1px 0 $white_15, 0 1px 1px $black_15;
+      border-bottom: 1px solid $color_lochmara_approx;
+      > span::after {
+        border-color: $color_gallery_approx;
+      }
+    }
+    &:first-child > a {
+      border-top: 1px solid $cskt_border_grey;
+    }
+    &:last-child > a {
+      //border-bottom: 1px solid $color_lochmara_approx;
+      border-bottom: 1px solid $cskt_border_grey;
+    }
+    &.last > a {
+      border-bottom: 1px solid $color_lochmara_approx;
+    }
+  }
+}
+.align-right {
+  float: right;
+}
+.holder {
+  cursor: pointer;
+  width: 0;
+  height: 0;
+  position: absolute;
+  top: 0;
+  right: 0;
+  &::after {
+    @extend %extend_3;
+    top: 17px;
+    border-top: 2px solid $white;
+    border-left: 2px solid $white;
+  }
+  &::before {
+    @extend %extend_3;
+    top: 18px;
+    border-top: 2px solid;
+    border-left: 2px solid;
+    border-top-color: inherit;
+    border-left-color: inherit;
+  }
+}

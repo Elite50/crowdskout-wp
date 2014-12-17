@@ -53,7 +53,7 @@
             parent:: __construct(
                 'CSKT_Widget',
                 __('Crowdskout Widget', 'cskt_widget_domain'),
-                array('description' => __('Send site newsletter sign-ups and social media interactions to your Crowdskout app for data analytics, segmentation and marketing.', 'cskt_widget_domain'),)
+                array('description' => __('Crowdskout integrated newsletter and social media interactions.', 'cskt_widget_domain'),)
             );
         }
 
@@ -81,6 +81,13 @@
         public function update( $new_instance, $old_instance ) {
             $instance = array();
             $instance['title'] = ( ! empty( $new_instance['title'] ) ) ? strip_tags( $new_instance['title'] ) : '';
+
+//	        $instance[ 'nl_checkbox' ] = $new_instance[ 'nl_checkbox' ];
+//	        $instance[ 'fb_like_checkbox' ] = $new_instance[ 'fb_like_checkbox' ];
+//	        $instance[ 'fb_share_checkbox' ] = $new_instance[ 'fb_share_checkbox' ];
+//	        $instance[ 'tw_follow_checkbox' ] = $new_instance[ 'tw_follow_checkbox' ];
+//	        $instance[ 'tw_share_checkbox' ] = $new_instance[ 'tw_share_checkbox' ];
+
             $instance['name_checkbox'] = $new_instance['name_checkbox'];
             return $instance;
         }
@@ -93,6 +100,18 @@
 
             if ( isset( $instance[ 'title' ] ) ) { $title = $instance[ 'title' ]; }
             else { $title = __( '', 'cskt_widget_domain' ); }
+
+	        if ( isset( $instance[ 'nl_checkbox' ] ) ) { $nl_checkbox = true; }
+	        else { $nl_checkbox = false; }
+	        if ( isset( $instance[ 'fb_like_checkbox' ] ) ) { $fb_like_checkbox = true; }
+	        else { $fb_like_checkbox = false; }
+	        if ( isset( $instance[ 'fb_share_checkbox' ] ) ) { $fb_share_checkbox = true; }
+	        else { $fb_share_checkbox = false; }
+	        if ( isset( $instance[ 'tw_follow_checkbox' ] ) ) { $tw_follow_checkbox = true; }
+	        else { $tw_follow_checkbox = false; }
+	        if ( isset( $instance[ 'tw_share_checkbox' ] ) ) { $tw_share_checkbox = true; }
+	        else { $tw_share_checkbox = false; }
+
             if ( isset ( $instance[ 'name_checkbox' ] ) ) { $name_checkbox = true; }
             else { $name_checkbox = false; }
 

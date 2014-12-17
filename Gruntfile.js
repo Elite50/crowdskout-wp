@@ -13,7 +13,7 @@ module.exports = function(grunt) {
           style: 'expanded'
         },
         files: {
-          'shortcodes/shortcodes.css': 'shortcodes/shortcodes.scss'
+          'css/cskt.css': 'scss/cskt.scss',
         }
       },
 
@@ -22,23 +22,23 @@ module.exports = function(grunt) {
           style: 'compact'
         },
         files: {
-          'shortcodes/shortcodes.min.css': 'shortcodes/shortcodes.scss'
+            'css/cskt.css': 'scss/cskt_compact.scss',
         }
       }
     },
 
-    concat: {
-      options: {
-        // define a string to put between each file in the concatenated output
-          separator: ';'
-      },
-      dist: {
-        // the files to concatenate
-        src: ['shortcodes/email/*.js', 'shortcodes/like/*.js'],
-        // the location of the resulting JS file
-        dest: 'shortcodes/shortcodes.js'
-      }
-    },
+    //concat: {
+    //  options: {
+    //    // define a string to put between each file in the concatenated output
+    //      separator: ';'
+    //  },
+    //  dist: {
+    //    // the files to concatenate
+    //    src: ['shortcodes/email/*.js', 'shortcodes/like/*.js'],
+    //    // the location of the resulting JS file
+    //    dest: 'shortcodes/shortcodes.js'
+    //  }
+    //},
 
     uglify: { // minify js
       options: {
@@ -47,6 +47,18 @@ module.exports = function(grunt) {
       build: { // add different build tasks for different folders as you build out functionalities
         src: 'js/forms_js_interface.js',
         dest: 'js/forms_js_interface.min.js'
+      },
+      build2: {
+          src: 'js/cskt-accordionmenu.js',
+          dest: "js/accordionmenu.min.js"
+      },
+      build3: {
+        src: 'js/cskt.js',
+        dest: 'js/cskt.min.js'
+      },
+      build4: {
+        src: 'js/fb_sdk_interface.js',
+        dest: 'js/fb_sdk_interface.min.js'
       }
     },
 
@@ -62,19 +74,22 @@ module.exports = function(grunt) {
       }
     },
 
-    watch: { // watch for changes is the scss and the js, run tasks if any changes
+    watch: { // watch for changes, run tasks if any changes
       tasks: ['jshint'],
       css: { // changes in css livereload
-        files: ['shortcodes/shortcodes.css'],
+        files: ['**/*.css'],
         options: {
           livereload: 1337
         }
       },
       scss: { // changes in scss runs sass task, which translates scss to css
-        files: ['shortcodes/shortcodes.scss'],
-        tasks: ['sass:dev']
+        files: ['**/*.scss'],
+        tasks: ['sass:dev'],
+        options: {
+          livereload: 1337
+        }
       },
-      changes: { // if changes in js livereload
+      changes: { // if changes in js or php too livereload
         files: ['**/*.js', '**/*.php'],
         options: {
           livereload: 1337

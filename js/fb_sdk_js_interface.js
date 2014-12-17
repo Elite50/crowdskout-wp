@@ -1,7 +1,7 @@
 // Facebook App Helper Functions
 (function($) {
     cskt.fbHandlers = function () {
-        console.log('welcome to jurasic park');
+        //console.log('welcome to jurasic park');
         // Here we run a very simple test of the Graph API after login is
         // successful.  See statusChangeCallback() for when this call is made.
         function testAPI() {
