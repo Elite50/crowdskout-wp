@@ -37,11 +37,13 @@ var cskt = {};
     };
 
     // make a call to the jquery-ui for sortable accordion menu elements
-    $(function() {
-        $( '#accordionmenu ul' ).sortable();
-        $( '#accordionmenu ul' ).disableSelection();
-        $( '#accordionmenu li' ).disableSelection();
-    });
+    if ($( "title:contains('Widgets')" )) {
+        $(function() {
+            $( '#accordionmenu ul' ).sortable();
+            $( '#accordionmenu ul' ).disableSelection();
+            $( '#accordionmenu li' ).disableSelection();
+        });
+    }
 
 })(jQuery);
 

@@ -26,8 +26,13 @@
 
 	class CSKT_Widget_Factory {
 
-		public function cskt_get_inputs( $inputs ) {
+		public function build ()
+		{
 
+		}
+
+		public function cskt_get_inputs( $inputs )
+		{
 			if (in_array('newsletter', $inputs )) {
 				$cskt_widget->$newsletter_mod = new $module('newsletter');
 			} elseif (in_array('facebook_like', $inputs)) {
