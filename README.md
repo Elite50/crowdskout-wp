@@ -21,6 +21,9 @@ To add a Crowdskout Newsletter shortcode, enter `[cskt_newsletter]` into the pos
 
 ## Changelog ##
 
+### 1.2.2 ###
+* Fixed a bug in PHP 5.3 support
+
 ### 1.2.1 ###
 * Fixed a bug in the Crowdskout API URL
 

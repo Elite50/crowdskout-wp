@@ -41,13 +41,13 @@
 		*/
 		public static function isEditPage($pagenow)
 		{
-		/** make sure we are on the backend */
+			// make sure we are on the backend
 			if (!is_admin()) {
-			return false;
-		}
+				return false;
+			}
 
-		/** make sure user is editing a post as opposed to creating a new one */
-			return in_array( $pagenow, array( 'post.php', 'post-new.php' ) );
+			// make sure user is editing a post as opposed to creating a new one
+			return in_array( $pagenow, array('post.php', 'post-new.php') );
 		}
 
 		/**
@@ -68,10 +68,10 @@
 		*/
 		protected function makeRequest($crowdskoutUrl, $type)
 		{
-			$cskt_request = json_encode([
-			'url' => $this->url,
-			'topics' => $this->topics,
-			]);
+			$cskt_request = json_encode(array(
+				'url' => $this->url,
+				'topics' => $this->topics,
+			));
 
 			/** Send Request to the Crowdskout Database */
 			$cskt_api_host = $crowdskoutUrl;
