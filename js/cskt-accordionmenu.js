@@ -1,5 +1,5 @@
 (function($) {
     if ($( "title:contains('Widgets')" )) {
-        cskt.accordionMenu();
+        cskt_admin.accordionMenu();
     }
 })(jQuery);

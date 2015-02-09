@@ -34,14 +34,20 @@
     require_once CSKT_PLUGIN_SERVER_ROOT . '/shortcode.php';
     require_once CSKT_PLUGIN_SERVER_ROOT . '/topics.php';
 
-    /** include the WP_Http class */
+    /** include the WP_Http class for http requests */
     if( !class_exists( 'WP_Http' ) )
         include_once( ABSPATH . WPINC. '/class-http.php' );
 
-	/** add crowdskout scripts and styles */
+	CSKT_Shortcode_Factory::create('cskt_newsletter');
+	CSKT_Shortcode_Factory::create('cskt_fb_like');
+	CSKT_Shortcode_Factory::create('cskt_fb_share');
+	CSKT_Shortcode_Factory::create('cskt_tw_follow');
+	CSKT_Shortcode_Factory::create('cskt_tw_share');
+
+	/** functions to add crowdskout scripts and styles */
 	if (!function_exists('cskt_debug')) {
 		/**
-		 * @return string
+		 * @return string for $flag variable in scripts functions
 		 */
 		function cskt_debug() {
 			if ( ! WP_DEBUG ) {
@@ -59,7 +65,9 @@
 	        $flag = cskt_debug();
 	        wp_enqueue_script('cskt', plugins_url() . '/crowdskout-wp/js/cskt' . $flag . '.js', array('jquery'), '', true );
             wp_enqueue_script('forms_js_interface', plugins_url() . '/crowdskout-wp/js/forms_js_interface' . $flag . '.js', array('jquery'), '', true );
-            wp_enqueue_script('fb_sdk_js_interface', plugins_url() . '/crowdskout-wp/js/fb_sdk_js_interface' . $flag . '.js', array('jquery'), '', true );
+            wp_enqueue_script('fb_sdk_js_interface', plugins_url() . '/crowdskout-wp/js/fb_sdk_js_interface' . $flag . '.js', array('cskt'), '', true );
+            wp_enqueue_script('tw_sdk_js_interface', plugins_url() . '/crowdskout-wp/js/tw_sdk_js_interface' . $flag . '.js', array('cskt'), '', true );
+	        wp_enqueue_style('cskt_css', plugins_url() . '/crowdskout-wp/css/cskt.css');
         }
     }
 
@@ -67,27 +75,35 @@
 		add_action( 'admin_enqueue_scripts', 'cskt_add_admin_scripts' );
 		function cskt_add_admin_scripts() {
 			$flag = cskt_debug();
-			wp_enqueue_script('cskt_js', plugins_url() . '/crowdskout-wp/js/cskt' . $flag . '.js', array('jquery','jquery-ui-sortable'), '', true);
-			wp_enqueue_script('accordionmenu', plugins_url() . '/crowdskout-wp/js/cskt-accordionmenu' . $flag . '.js', array('cskt_js'), '', true);
-			wp_enqueue_style('cskt_css', plugins_url() . '/crowdskout-wp/css/cskt.css');
+			wp_enqueue_script('cskt_admin', plugins_url() . '/crowdskout-wp/js/cskt_admin' . $flag . '.js', array('jquery','jquery-ui-sortable'), '', true);
+			wp_enqueue_script('accordionmenu', plugins_url() . '/crowdskout-wp/js/cskt-accordionmenu' . $flag . '.js', array('cskt_admin'), '', true);
+			wp_enqueue_style('cskt_admin_css', plugins_url() . '/crowdskout-wp/css/cskt.css');
 		}
 	}
 
-    /**
-     * The main function that takes cskts javascript and
-     * adds it to the footer of the application for tracking.
-     */
-    if (!function_exists('cskt_add_analytics_js')) {
-
-        function cskt_add_analytics_js() {
-            require CSKT_PLUGIN_SERVER_ROOT . '/views/footer-js.php';
-        }
-    }
-    add_action('wp_footer', 'cskt_add_analytics_js');
-
+	/**
+	 * function that adds 3rd party facebook js to page
+	 */
 	if (!function_exists('cskt_add_fb_js')) {
+		add_action('wp_footer', 'cskt_add_fb_js');
 		function cskt_add_fb_js() {
 			require CSKT_PLUGIN_SERVER_ROOT . '/views/facebook_sdk_js.php';
 		}
 	}
-	add_action('wp_footer', 'cskt_add_fb_js');
+	if (!function_exists('cskt_add_tw_js')) {
+		add_action('wp_footer', 'cskt_add_tw_js');
+		function cskt_add_tw_js() {
+			require CSKT_PLUGIN_SERVER_ROOT . '/views/twitter_sdk_js.php';
+		}
+	}
+
+	/**
+	 * The main function that takes cskt's analytics javascript and
+	 * adds it to the footer of the application for tracking.
+	 */
+	if (!function_exists('cskt_add_analytics_js')) {
+		add_action('wp_footer', 'cskt_add_analytics_js');
+		function cskt_add_analytics_js() {
+			require CSKT_PLUGIN_SERVER_ROOT . '/views/footer-js.php';
+		}
+	}

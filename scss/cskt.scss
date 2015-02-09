@@ -1,28 +1,43 @@
-//cskt main styles
+//all cskt stylesheets
 
-//colors
-$white: #ffffff;
-$cskt_blue: #00AEEF;
-$cskt_blue_hover: #26BAF1;
-$cskt_blue_down: #069AD2;
-$cskt_grey: #CCCCCC;
-$cskt_border_grey: #999999;
+// Module files - mixin declarations, functions, and variables
+@import "modules/cskt_variables";
 
-$color_lochmara_approx: #1682ba;
-$black_35: rgba(0, 0, 0, 0.35);
-$color_picton_blue_approx: #36aae7;
-$color_curious_blue_approx: #1fa0e4;
-$white_15: rgba(255, 255, 255, 0.15);
-$color_gallery_approx: #eeeeee;
-$black_15: rgba(0, 0, 0, 0.15);
-$color_tuna_approx: #32373e;
-$color_trout_approx: #49505a;
-$white_10: rgba(255, 255, 255, 0.1);
-$color_mako_approx: #424852;
+// partial files - specific categories of things, menus, buttons, etc
 
-//fonts
-$font_0: Helvetica;
-$font_1: Arial;
-$font_2: sans-serif;
 
-@import "partials/accordionmenu";
+// vendor files - 3rd party styles
+@import "vendors/accordionmenu";
+
+// changes to vendor files
+// facebook like div (with comments popup)
+.cskt-fb-like {
+  padding-right: 5px;
+  bottom: 6px;
+  span {
+    overflow: visible!important;
+    width: 450px!important;
+    z-index: 10;
+  }
+}
+// facebook like iframe (without comments popup)
+.facebook-like-button {
+  margin-bottom: 0px;
+  padding-right: 3px;
+}
+// facebook share div
+.cskt-fb-share {
+  bottom: 6px;
+  padding-right: 3px;
+  z-index: 9;
+}
+// twitter follow iframe
+.twitter-follow-button {
+  margin-bottom: 0px;
+  padding-right: 5px;
+}
+// twitter tweet iframe
+.twitter-tweet-button {
+  margin-bottom: 0px;
+  padding-right: 5px;
+}

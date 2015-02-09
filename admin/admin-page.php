@@ -18,6 +18,8 @@ if (!function_exists('cskt_add_settings')) {
         register_setting('cskt_plugin', 'cskt_client_id', 'cskt_sanitize_integer');
         register_setting('cskt_plugin', 'cskt_facebook_app_id','cskt_sanitize_integer' );
         register_setting('cskt_plugin', 'cskt_facebook_app_secret');
+        register_setting('cskt_plugin', 'cskt_facebook_page_url');
+        register_setting('cskt_plugin', 'cskt_twitter_handle');
 
 		/** Registering sections */
         add_settings_section('cskt_pageviews', 'Pageview Tracking', 'cskt_pageview_explain', 'crowdskout');
@@ -35,6 +37,12 @@ if (!function_exists('cskt_add_settings')) {
 		));
         add_settings_field('cskt_facebook_app_secret', 'Facebook App Secret', 'cskt_input_string', 'crowdskout', 'cskt_social', array(
 			'name' => 'cskt_facebook_app_secret'
+		));
+		add_settings_field('cskt_facebook_page_url', 'Facebook Page URL', 'cskt_input_string', 'crowdskout', 'cskt_social', array(
+			'name' => 'cskt_facebook_page_url'
+		));
+		add_settings_field('cskt_twitter_handle', 'Twitter Handle', 'cskt_input_string', 'crowdskout', 'cskt_social', array(
+			'name' => 'cskt_twitter_handle'
 		));
 	}
 	add_action('admin_init', 'cskt_add_settings');

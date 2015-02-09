@@ -1,7 +1,7 @@
 // Facebook App Helper Functions
 (function($) {
     cskt.fbHandlers = function () {
-        //console.log('welcome to jurasic park');
+        console.log('welcome to facebook park');
         // Here we run a very simple test of the Graph API after login is
         // successful.  See statusChangeCallback() for when this call is made.
         function testAPI() {
@@ -28,8 +28,7 @@
             } else if (response.status === 'not_authorized') {
                 // The person is logged into Facebook, but not your app.
                 console.log('logged into Facebook, but not your app');
-                //document.getElementById('status').innerHTML = 'Please log ' +
-                //    'into this app.';
+                console.log('Please log into this app ' + response.name);
             } else {
                 console.log('not logged into Facebook, so not sure if they are logged into this app or not.');
                 // The person is not logged into Facebook, so we're not sure if
@@ -47,8 +46,6 @@
                 statusChangeCallback(response);
             });
         }
-
-        // // reload on infinite scroll new article load
 
         // Now that we've initialized the JavaScript SDK, we call
         // FB.getLoginStatus().  This function gets the state of the
@@ -69,101 +66,19 @@
         //// Google Analytics and Facebook - listen for a Like, Unlike, or Share, and sends the event to Google Analytics.
         //// Like the page
         FB.Event.subscribe('edge.create', function (href, widget) {
-
-            // WHICH GA event (since the action is facebook like, that is always the which event)
-            var currentPage = jQuery(document).attr('title');
-            if (jQuery("body").hasClass('single')) {
-                currentPage = jQuery('.entry-title').html()
-            }
-            ga('send', 'social', 'Facebook', 'Like', currentPage); // tracking as social events
-            ga('send', 'event', 'Facebook', 'Like', currentPage); // tracking as general events
-
-            // WHERE GA event
-            var pageLocation = jQuery(widget).data("ga_whereevent_category");
-            if (pageLocation == null) {
-                pageLocation = 'unknown';
-            }
-            var eventLocation = pageLocation + '-' + window.userDevice;
-            ga('send', 'social', 'Facebook', 'Like', eventLocation);
-            ga('send', 'event', 'Facebook', 'Like', eventLocation);
-
-            // GA WHAT event
-            // if on article page
-            if (jQuery("body").hasClass('single')) {
-                var pageType = jQuery('article').find('.top-tag').html();
-            } else if (jQuery("body").hasClass('home')) {
-                var pageType = 'home';
-            } else {
-                var pageType = jQuery('body').find('h1').first().text();
-            }
-            ga('send', 'social', 'Facebook', 'Like', pageType);
-            ga('send', 'event', 'Facebook', 'Like', pageType);
-
+            console.log('like');
             document.cookie = "FBLike=true;path=/;expires=Fri, 31 Dec 9999 23:59:59 GMT;max-age=157680000";
         });
 
         //Unlikes the page
         FB.Event.subscribe('edge.remove', function (href, widget) {
-
-            // GA WHICH event (since the action is facebook unlike, that is always the which event)
-            var currentPage = jQuery(document).attr('title');
-            ga('send', 'social', 'Facebook', 'UnLike', currentPage);
-            ga('send', 'event', 'Facebook', 'UnLike', currentPage);
-
-            // GA WHERE event
-            var pageLocation = jQuery(widget).data("ga_whereevent_category");
-            if (pageLocation == null) {
-                pageLocation = 'unknown';
-            }
-            var eventLocation = pageLocation + '-' + window.userDevice;
-            ga('send', 'social', 'Facebook', 'UnLike', eventLocation);
-            ga('send', 'event', 'Facebook', 'UnLike', eventLocation);
-
-            // GA WHAT event
-            // if on article page
-            if (jQuery("body").hasClass('single')) {
-                var pageType = jQuery('article').find('.top-tag').html();
-            } else if (jQuery("body").hasClass('home')) {
-                var pageType = 'home';
-            } else {
-                var pageType = jQuery('body').find('h1').first().text();
-            }
-            ga('send', 'social', 'Facebook', 'UnLike', pageType);
-            ga('send', 'event', 'Facebook', 'UnLike', pageType);
-
+            console.log('unlike');
             document.cookie = "FBLike=false;path=/;expires=Fri, 31 Dec 9999 23:59:59 GMT;max-age=157680000";
         });
 
         //Send or Share The Page
         FB.Event.subscribe('message.send', function (href, widget) {
-
-            // GA WHICH event (since the action is facebook share, that is always the which event)
-            var currentPage = jQuery(document).attr('title');
-            ga('send', 'social', 'Facebook', 'Share', currentPage);
-            ga('send', 'event', 'Facebook', 'Share', currentPage);
-
-            // GA WHERE event
-            var pageLocation = jQuery(widget).data("ga_whereevent_category");
-            if (pageLocation == null) {
-                //console.log("error: you have set up a facebook like button without setting the ga pageLocation");
-                pageLocation = 'unknown';
-            }
-            var eventLocation = pageLocation + '-' + window.userDevice;
-            ga('send', 'social', 'Facebook', 'Share', eventLocation);
-            ga('send', 'event', 'Facebook', 'Share', eventLocation);
-
-            // GA WHAT event
-            // if on article page
-            if (jQuery("body").hasClass('single')) {
-                var pageType = jQuery('article').find('.top-tag').html();
-            } else if (jQuery("body").hasClass('home')) {
-                var pageType = 'home';
-            } else {
-                var pageType = jQuery('body').find('h1').first().text();
-            }
-            ga('send', 'social', 'Facebook', 'Share', pageType);
-            ga('send', 'event', 'Facebook', 'Share', pageType);
-
+            console.log('share');
             document.cookie = "FBShare=true;path=/;expires=Fri, 31 Dec 9999 23:59:59 GMT;max-age=157680000";
         });
 

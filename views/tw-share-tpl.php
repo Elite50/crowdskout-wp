@@ -1,16 +1,12 @@
-<a href="#" id="cs-tw-share" data-action="cs_tw_share_click">Share this on Twitter</a>
-<script>
-    (function($) {
-        $("#cs-tw-share").click(function(e) {
-            e.preventDefault();
-            var clickData = $(this).data();
-            $.ajax({
-                url: cs_ajax.url,
-                type: 'POST',
-                data: clickData
-            }).success(function(response) {
-                console.log(response);
-            });
-        });
-    })(jQuery)
-</script>
+<a
+	href="https://twitter.com/share"
+	class="twitter-share-button"
+	data-url="<?php echo $url;?>"
+	data-text="<?php echo $text;?>"
+	data-via="<?php echo $via;?>"
+	<?php if ($size == 'large') { echo 'data-size="large"'; }?>
+	<?php if (!($recommend == '')) { echo 'data-related="'.$recommend.'"'; }?>
+	<?php if ($show_count == '') { echo 'data-show-count="false"'; }?>
+	<?php if (!($hashtags == '')) { echo 'data-hashtags="'.$hashtags.'"'; }?>>
+	Tweet
+</a>

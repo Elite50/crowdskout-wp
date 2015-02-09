@@ -1,19 +1,19 @@
 <?php
-/** Initializes Facebook javascripts */
-	$facebookAppId = get_option('cskt_facebook_app_id');
-	$facebookAppSecret = get_option('cskt_facebook_app_secret');
-	if (is_numeric($facebookAppId) && is_string($facebookAppSecret) && 0 !== (int) $facebookAppId && 0 !== $facebookAppSecret) {
+	/** Initializes Facebook SDK */
+	$fbAppId = get_option('cskt_facebook_app_id');
+	$fbAppSecret = get_option('cskt_facebook_app_secret');
+	if (is_numeric($fbAppId) && is_string($fbAppSecret) && 0 !== (int) $fbAppId && 0 !== $fbAppSecret) {
     ?>
 		<div id="fb-root"></div>
 		<script>
 			window.fbAsyncInit = function() {
-			        FB.init({
-		            appId      : <?php echo $facebookAppId; ?>,
-		            xfbml      : true,
-		            version    : 'v2.2'
-	            });
+				FB.init({
+					appId      : <?php echo $fbAppId; ?>,
+					xfbml      : true,
+					version    : 'v2.2'
+				});
 				cskt.fbHandlers();
-		    };
+			};
 		    (function(d, s, id){
 		        var js, fjs = d.getElementsByTagName(s)[0];
 		        if (d.getElementById(id)) {return;}

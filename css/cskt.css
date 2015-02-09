@@ -196,4 +196,35 @@
   border-left-color: inherit;
 }
 
+.cskt-fb-like {
+  padding-right: 5px;
+  bottom: 6px;
+}
+.cskt-fb-like span {
+  overflow: visible !important;
+  width: 450px !important;
+  z-index: 10;
+}
+
+.facebook-like-button {
+  margin-bottom: 0px;
+  padding-right: 3px;
+}
+
+.cskt-fb-share {
+  bottom: 6px;
+  padding-right: 3px;
+  z-index: 9;
+}
+
+.twitter-follow-button {
+  margin-bottom: 0px;
+  padding-right: 5px;
+}
+
+.twitter-tweet-button {
+  margin-bottom: 0px;
+  padding-right: 5px;
+}
+
 /*# sourceMappingURL=cskt.css.map */

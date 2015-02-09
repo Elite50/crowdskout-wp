@@ -13,7 +13,7 @@ module.exports = function(grunt) {
           style: 'expanded'
         },
         files: {
-          'css/cskt.css': 'scss/cskt.scss',
+          'css/cskt.css': 'scss/cskt.scss'
         }
       },
 
@@ -22,7 +22,7 @@ module.exports = function(grunt) {
           style: 'compact'
         },
         files: {
-            'css/cskt.css': 'scss/cskt_compact.scss',
+            'css/cskt.css': 'scss/cskt_compact.scss'
         }
       }
     },
@@ -53,12 +53,16 @@ module.exports = function(grunt) {
           dest: "js/accordionmenu.min.js"
       },
       build3: {
-        src: 'js/cskt.js',
-        dest: 'js/cskt.min.js'
+        src: 'js/cskt_admin.js',
+        dest: 'js/cskt_admin.min.js'
       },
       build4: {
         src: 'js/fb_sdk_interface.js',
         dest: 'js/fb_sdk_interface.min.js'
+      },
+      build5: {
+        src: 'js/cskt.js',
+        dest: 'js/cskt.min.js'
       }
     },
 
