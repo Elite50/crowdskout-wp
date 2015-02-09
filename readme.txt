@@ -3,7 +3,7 @@ Contributors: GYatesIII
 Tags: analytics, crowdskout
 Requires at least: 3.0.1
 Tested up to: 4.0
-Stable tag: 1.2
+Stable tag: 1.2.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -27,6 +27,9 @@ To add a Crowdskout Newsletter shortcode, enter `[cskt_newsletter]` into the pos
 * Now login to the WordPress backend, and navigate to Settings > Crowdskout. Once you enter your Source ID and Client ID here and save, your page views will automatically start tracking and newsletter sign-ups will be ingested to the Crowdskout platform.
 
 == Changelog ==
+
+= 1.2.1 =
+* Fixed a bug in the Crowdskout API URL
 
 = 1.2 =
 * Categories and Tags integrated into pageview tracking
