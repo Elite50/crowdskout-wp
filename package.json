@@ -1,6 +1,6 @@
 {
   "name": "crowdskout-wp",
-  "version": "1.0.0",
+  "version": "1.2.2",
   "description": "Adds the JavaScript code needed for the [Crowdskout](http://crowdskout.com) analytics suite in the footer. Includes an admin area to enter the Source ID.",
   "main": "index.js",
   "scripts": {

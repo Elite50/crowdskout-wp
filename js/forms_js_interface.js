@@ -29,7 +29,7 @@
         }
     }
     if (!window.Crowdskout) {
-        var t = "https://staging-api.crowdskout.com";
+        var t = "https://api.crowdskout.com";
         var n = document.getElementsByTagName("head")[0];
         var r = document.createElement("script");
         r.src = t + "/forms.js";
