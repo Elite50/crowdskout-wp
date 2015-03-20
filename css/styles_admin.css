@@ -1,0 +1,132 @@
+/* line 1, ../scss/styles_admin.scss */
+#wpcontent {
+  background: #00aeef;
+  position: absolute !important;
+  width: 100%;
+}
+/* line 5, ../scss/styles_admin.scss */
+#wpcontent .wrap {
+  margin: 0 auto;
+  width: 300px;
+  transform: translateX(-70px);
+  position: relative;
+}
+/* line 11, ../scss/styles_admin.scss */
+#wpcontent .wrap .login-logo {
+  margin: 0 auto 60px;
+  width: 185px;
+  height: 185px;
+  background-image: url("https://app.crowdskout.com/assets/img/crowdskout-login-logo.png");
+}
+/* line 18, ../scss/styles_admin.scss */
+#wpcontent .wrap .cskt_connect input {
+  box-sizing: border-box;
+  display: block;
+  width: 100%;
+  background: transparent;
+  padding: 14px 8px;
+  border-radius: 0;
+  border: 3px solid #fff;
+  color: #fff;
+  margin-bottom: 10px;
+  font-size: 14px;
+  letter-spacing: 1px;
+  font-weight: 400;
+}
+/* line 32, ../scss/styles_admin.scss */
+#wpcontent .wrap .cskt_connect ::-webkit-input-placeholder {
+  color: #fff;
+}
+/* line 36, ../scss/styles_admin.scss */
+#wpcontent .wrap .cskt_connect :-moz-placeholder {
+  /* Firefox 18- */
+  color: #fff;
+}
+/* line 40, ../scss/styles_admin.scss */
+#wpcontent .wrap .cskt_connect ::-moz-placeholder {
+  /* Firefox 19+ */
+  color: #fff;
+}
+/* line 44, ../scss/styles_admin.scss */
+#wpcontent .wrap .cskt_connect :-ms-input-placeholder {
+  color: #fff;
+}
+/* line 47, ../scss/styles_admin.scss */
+#wpcontent .wrap .cskt_connect input[type="submit"] {
+  float: right;
+  width: 35%;
+  background: #fff;
+  color: #00aeef;
+  text-transform: uppercase;
+}
+/* line 54, ../scss/styles_admin.scss */
+#wpcontent .wrap .cskt_connect #submit_response {
+  color: #fff;
+}
+/* line 57, ../scss/styles_admin.scss */
+#wpcontent .wrap .cskt_connect .response_waiting:before {
+  content: 'Please wait...';
+}
+/* line 63, ../scss/styles_admin.scss */
+#wpcontent .wrap .cskt_connect .response_error:before {
+  content: 'Invalid credentials';
+}
+/* line 68, ../scss/styles_admin.scss */
+#wpcontent .wrap #cskt_oauth {
+  display: none;
+}
+/* line 70, ../scss/styles_admin.scss */
+#wpcontent .wrap #cskt_oauth label {
+  color: #fff;
+  font-size: 14px;
+  letter-spacing: 1px;
+  font-weight: 400;
+}
+/* line 76, ../scss/styles_admin.scss */
+#wpcontent .wrap #cskt_oauth #cskt_accounts {
+  box-sizing: border-box;
+  display: block;
+  width: 100%;
+  background: transparent;
+  padding: 14px 8px;
+  border-radius: 0;
+  border: 3px solid #fff;
+  color: #fff;
+  margin-bottom: 10px;
+  font-size: 14px;
+  letter-spacing: 1px;
+  font-weight: 400;
+  margin-top: 10px;
+}
+/* line 91, ../scss/styles_admin.scss */
+#wpcontent .wrap #cskt_oauth input[type="submit"] {
+  box-sizing: border-box;
+  display: block;
+  padding: 14px 8px;
+  border-radius: 0;
+  border: 3px solid #fff;
+  margin-bottom: 10px;
+  font-size: 14px;
+  letter-spacing: 1px;
+  font-weight: 400;
+  float: right;
+  width: 35%;
+  background: #fff;
+  color: #00aeef;
+  text-transform: uppercase;
+}
+
+@media only screen and (max-width: 960px) {
+  /* line 113, ../scss/styles_admin.scss */
+  #wpcontent .wrap {
+    transform: translateX(0);
+  }
+}
+@media only screen and (max-width: 783px) {
+  /* line 121, ../scss/styles_admin.scss */
+  #wpcontent .wrap {
+    transform: translateX(0);
+  }
+}
+
+/*# sourceMappingURL=styles_admin.css.map */

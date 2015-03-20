@@ -6,37 +6,29 @@ module.exports = function(grunt) {
 
     // Project Plugins
 
-    sass: { // compile sass/scss to css
+    compass: { // compile sass/scss to css
+
+      clean: {
+        options: {
+          clean: true // removes generated files and sass cache
+        }
+      },
 
       dev: {
         options: {
-          style: 'expanded'
-        },
-        files: {
-          'shortcodes/shortcodes.css': 'shortcodes/shortcodes.scss'
+          sassDir: 'scss',
+          cssDir: 'css',
+          environment: 'development',
+          sourcemap: true,
+          force: true // overwrite existing file
         }
       },
-
       dist: {
         options: {
-          style: 'compact'
-        },
-        files: {
-          'shortcodes/shortcodes.min.css': 'shortcodes/shortcodes.scss'
+          sassDir: '[scss]',
+          cssDir: '[css]',
+          environment: 'production'
         }
-      }
-    },
-
-    concat: {
-      options: {
-        // define a string to put between each file in the concatenated output
-          separator: ';'
-      },
-      dist: {
-        // the files to concatenate
-        src: ['shortcodes/email/*.js', 'shortcodes/like/*.js'],
-        // the location of the resulting JS file
-        dest: 'shortcodes/shortcodes.js'
       }
     },
 
@@ -47,6 +39,10 @@ module.exports = function(grunt) {
       build: { // add different build tasks for different folders as you build out functionalities
         src: 'js/forms_js_interface.js',
         dest: 'js/forms_js_interface.min.js'
+      },
+      build2: {
+          src: 'js/scripts_admin.js',
+          dest: 'js/scripts_admin.min.js'
       }
     },
 
@@ -64,18 +60,19 @@ module.exports = function(grunt) {
 
     watch: { // watch for changes is the scss and the js, run tasks if any changes
       tasks: ['jshint'],
-      css: { // changes in css livereload
-        files: ['shortcodes/shortcodes.css'],
-        options: {
-          livereload: 1337
-        }
-      },
       scss: { // changes in scss runs sass task, which translates scss to css
-        files: ['shortcodes/shortcodes.scss'],
-        tasks: ['sass:dev']
+        files: ['**/*.scss'],
+        tasks: ['compass:dev']
+      },
+      js: {
+        files: ['js/**/*.js'],
+        task: ['uglify'],
+          options: {
+              livereload:true
+          }
       },
       changes: { // if changes in js livereload
-        files: ['**/*.js', '**/*.php'],
+        files: ['**/*.php', '**/*.css', '!node_modules'],
         options: {
           livereload: 1337
         }
@@ -91,10 +88,11 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-contrib-sass');
   grunt.loadNpmTasks('grunt-contrib-concat');
+  grunt.loadNpmTasks('grunt-contrib-compass');
 
   // register tasks
 
-  grunt.registerTask('default', ['jshint', 'concat', 'uglify', 'sass']);
+  grunt.registerTask('default', ['jshint', 'concat', 'uglify', 'sass', 'compass']);
   grunt.registerTask('test', ['jshint']);
 
 };

@@ -8,3 +8,7 @@ if (!function_exists('cskt_sanitize_integer')) {
 		return is_numeric($in) ? (int) $in : 0;
 	}
 }
+
+if (!function_exists('cskt_sanitize_email')) {
+
+}
