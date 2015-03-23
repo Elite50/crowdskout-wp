@@ -27,6 +27,14 @@
      */
 
     define('CSKT_PLUGIN_SERVER_ROOT', __DIR__);
+	define('LOCAL_BACKEND', 'http://loc.cs-back.com'); // Will
+	define('LOCAL_BACKEND_2', 'http://dev.api.crowdskout.com'); // George
+	define('CSKT_BACKEND', 'https://api.crowdskout.com');
+	if (WP_DEBUG) {
+		$GLOBALS['backend'] = constant( "LOCAL_BACKEND" );
+	} else {
+		$GLOBALS['backend'] = constant( "CSKT_BACKEND" );
+	}
 
     require_once CSKT_PLUGIN_SERVER_ROOT . '/utils/logger.php'; // util functions for dev
     require_once CSKT_PLUGIN_SERVER_ROOT . '/admin/admin-page.php'; // generates settings page
@@ -76,13 +84,8 @@
         function cskt_add_analytics_js() {
 	        if (get_option('access_token')) {
 
-		        if (WP_DEBUG) {
-			        //$action  = "http://dev.api.crowdskout.com/oauth/tracking"; // George
-			        $action  = "http://loc.cs-back.com/oauth/tracking"; // Will
-		        } else {
-			        $action  = "https://api.crowdskout.com/oauth/tracking";
-		        }
-
+		        $action  = $GLOBALS['backend'] . "/oauth/tracking"; // Will
+				var_dump($action);
 				$auth = "Bearer " . get_option('access_token');
 				$args = array(
 					'headers' => array (
@@ -91,7 +94,7 @@
 				);
 
 				$response = wp_remote_get($action, $args);
-
+				var_dump($response);
 		        $substr=strchr($response['body'], "source");
 		        $exploded = explode('"', $substr);
 
@@ -121,25 +124,17 @@
 
 	if (!function_exists('cskt_oauth_connect')) {
 		add_action('init', 'cskt_oauth_connect');
-		/**
-		 *
-		 */
 		function cskt_oauth_connect() {
 
 			class OAuthConnect {
-				private $access_token;
-				public function __construct() {
-					// init variables
-					// get the endpoint/action
-					if (WP_DEBUG) {
-						//$action  = "http://dev.api.crowdskout.com/oauth/access_token"; // George
-						$action  = "http://loc.cs-back.com/oauth/access_token"; // Will
-					} else {
-						$action  = "https://api.crowdskout.com/oauth/access_token";
-					}
 
-					if(isset($_POST["submit"])) {
-						// form validation checking of user input
+				private $access_token;
+
+				public function __construct() {
+
+					if(isset($_POST["connect-submit"]) && current_user_can('install_plugins')) {
+
+						$action = $GLOBALS['backend'] . "/oauth/access_token";
 						$body = array(
 							'body' => array (
 								'grant_type' => 'password',
@@ -153,42 +148,46 @@
 								'client_secret' => 'v2tVxJI9rkbUJlm5yE1pdXnr5YSgVIE6swwJPn3'
 							)
 						);
+
+						// get access code from cskt
 						$response = wp_remote_post($action, $body);
-						var_dump($response);
 						$exploded = explode('"', $response['body']);
+
 						for ($i=0; $i < sizeof($exploded); ++$i) {
 							if ($exploded[$i] = 'access_token') {
-								$this->access_token = $exploded[$i+3];
+								$access_token = $exploded[$i+3];
 								// send at to db
-								add_option('access_token', $this->access_token);
-								var_dump($this->access_token);
+								var_dump($exploded[$i+3]);
+								var_dump($access_token);
+								add_option('access_token', $access_token);
 								break;
 							}
 						}
 					}
 				}
 
+				// public function to securely get the private access token
 				public function getAccessToken() {
 					return $this->access_token;
 				}
 
 			}
+
+			class OAuthDisconnect {
+				// if connecting to cskt
+				public function __construct() {
+					if(isset($_POST["disconnect-submit"]) && current_user_can('install_plugins')) {
+						delete_option('access_token');
+						delete_option('cskt_source_id');
+						delete_option('cskt_client_id');
+					}
+				}
+			}
+
 			if (get_option('access_token')) {
-				return;
+				$oauth = new OAuthDisconnect();
 			} else {
 				$oauth = new OAuthConnect();
 			}
-
-		}
-	}
-
-	// crowdskout wordpress db
-	if (!function_exists('cskt_create_database_table')) {
-		add_action('init', 'cskt_create_database_table');
-		/**
-		 *
-		 */
-		function cskt_create_database_table() {
-			global $wpdb;
 		}
 	}

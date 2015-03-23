@@ -4,7 +4,7 @@ jQuery(document).ready(function($) {
      Connect to Crowdskout Account through settings page
      ------------------------------------------------ */
 
-    $('.cskt_connect').on('submit', function(e) {
+    $('.cskt_login').on('submit', function(e) {
         // stop from submit
         e.preventDefault();
 
@@ -12,7 +12,7 @@ jQuery(document).ready(function($) {
         var csktPassword = $('.cskt_password').val();
         var csktEmail = $('.cskt_email').val();
 
-        $("#cskt_oauth").append( '<input type="hidden" name="password" value="' + csktPassword + '"/>' );
+        $("#cskt_connect").append( '<input type="hidden" name="password" value="' + csktPassword + '"/>' );
 
         var form = $(this);
         var formMethod = form.attr('method'); // method to send data (post method)
@@ -48,7 +48,7 @@ jQuery(document).ready(function($) {
                 }
                 // show response message
                 form.fadeOut(1000,function(){
-                    $("#cskt_oauth").fadeIn(1000,function(){
+                    $("#cskt_connect").fadeIn(1000,function(){
 
                     });
                 });
@@ -60,9 +60,9 @@ jQuery(document).ready(function($) {
                 responseMsg.fadeOut(1500,function(){
                     $(this).removeClass('response_waiting').addClass(newResponse).fadeIn(1000,function(){
                         setTimeout(function(){
-                            responseMsg.fadeOut(500,function(){
-                                $(this).removeClass(newResponse);
-                            });
+                            //responseMsg.fadeOut(500,function(){
+                            //    $(this).removeClass(newResponse);
+                            //});
                         },2000);
                     });
                 });
