@@ -155,11 +155,8 @@
 
 						for ($i=0; $i < sizeof($exploded); ++$i) {
 							if ($exploded[$i] = 'access_token') {
-								$access_token = $exploded[$i+3];
 								// send at to db
-								var_dump($exploded[$i+3]);
-								var_dump($access_token);
-								add_option('access_token', $access_token);
+								add_option('access_token', $exploded[$i+3]);
 								break;
 							}
 						}
