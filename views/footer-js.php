@@ -6,4 +6,3 @@
         a=o.getElementsByTagName(v)[0];b=o.createElement(v);b.src=e+'/analytics.js';a.parentNode.insertBefore(b,a);
     })(window, document, 'script', '//s.crowdskout.com','https://a.crowdskout.com');
 </script>
-

@@ -73,13 +73,9 @@
 				'url' => $this->url,
 				'topics' => $this->topics,
 			));
-
 			/** Send Request to the Crowdskout Database */
-			$cskt_api_host = $crowdskoutUrl;
-			$request = new WP_Http;
-			$result = $request->request($cskt_api_host, array('method' => $type, 'headers' => array('Content-Type' => 'application/json'), 'body' => $cskt_request, 'timeout' => apply_filters( 'http_request_timeout', 1 ), 'blocking' => false));
-
-			return $result;
+			$response = wp_remote_request($crowdskoutUrl, array('method' => $type, 'headers' => array('Content-Type' => 'application/json'), 'body' => $cskt_request));
+			return $response;
 		}
 	}
 
