@@ -32,14 +32,24 @@
 	define('CSKT_BACKEND', 'https://api.crowdskout.com');
 	if (WP_DEBUG) {
 		$GLOBALS['backend'] = constant( "LOCAL_BACKEND" );
+
 	} else {
 		$GLOBALS['backend'] = constant( "CSKT_BACKEND" );
 	}
 
-    require_once CSKT_PLUGIN_SERVER_ROOT . '/utils/logger.php'; // util functions for dev
+	// javascript debug var
+	add_action( 'wp_head', function () {
+		echo '<script>var WP_DEBUG = ';
+		echo ( defined( 'WP_DEBUG' ) && WP_DEBUG === true ) ? 'true' : 'false';
+		echo ';</script>';
+	} );
+
+	if (WP_DEBUG) {
+	    require_once CSKT_PLUGIN_SERVER_ROOT . '/utils/logger.php'; // util functions for dev
+	}
     require_once CSKT_PLUGIN_SERVER_ROOT . '/admin/admin-page.php'; // generates settings page
-    require_once CSKT_PLUGIN_SERVER_ROOT . '/widget.php';
-    require_once CSKT_PLUGIN_SERVER_ROOT . '/shortcode.php';
+    //require_once CSKT_PLUGIN_SERVER_ROOT . '/widget.php';
+    //require_once CSKT_PLUGIN_SERVER_ROOT . '/shortcode.php';
     require_once CSKT_PLUGIN_SERVER_ROOT . '/topics.php';
 
     /** include the WP_Http class */
@@ -82,11 +92,10 @@
     if (!function_exists('cskt_add_analytics_js')) {
 	    add_action('wp_footer', 'cskt_add_analytics_js');
         function cskt_add_analytics_js() {
-	        if (get_option('access_token')) {
+	        if (get_option('cskt_access_token')) {
 
-		        $action  = $GLOBALS['backend'] . "/oauth/tracking"; // Will
-				var_dump($action);
-				$auth = "Bearer " . get_option('access_token');
+		        $action  = $GLOBALS['backend'] . "/oauth/tracking";
+				$auth = "Bearer " . get_option('cskt_access_token');
 				$args = array(
 					'headers' => array (
 						"Authorization" => $auth
@@ -94,26 +103,30 @@
 				);
 
 				$response = wp_remote_get($action, $args);
-				var_dump($response);
+
 		        $substr=strchr($response['body'], "source");
 		        $exploded = explode('"', $substr);
 
 		        $keys = array();
 		        $values = array();
-		        for ($i=0; $i < sizeof($exploded); ++$i) {
-			        if (preg_match('!\d+!', $exploded[$i])) {
-				        preg_match_all('!\d+!', $exploded[$i], $matches);
+		        foreach ($exploded as $explodedItem) {
+			        if (preg_match('!\d+!', $explodedItem)) {
+				        preg_match_all('!\d+!', $explodedItem, $matches);
 				        array_push($values, $matches[0][0]);
 			        } else {
-				        array_push($keys, $exploded[$i]);
+				        array_push($keys, $explodedItem);
 			        }
 		        }
+
 		        for ($x=0; $x<sizeof($keys);$x++) {
 			        if ($keys[$x] == "source" && !get_option('cskt_source_id')) {
 				        add_option('cskt_source_id', $values[$x]);
 			        }
 			        if ($keys[$x] == "client" && !get_option('cskt_client_id')) {
 				        add_option('cskt_client_id', $values[$x]);
+			        }
+			        if ($keys[$x] == "organization" && !get_option('cskt_organization_id')) {
+				        add_option('cskt_organization_id', $values[$x]);
 			        }
 		        }
 
@@ -128,7 +141,7 @@
 
 			class OAuthConnect {
 
-				private $access_token;
+				private $cskt_access_token;
 
 				public function __construct() {
 
@@ -138,7 +151,7 @@
 						$body = array(
 							'body' => array (
 								'grant_type' => 'password',
-								'password' => $_POST["password"],
+								'password' => $_POST["cskt_password"],
 								'username' => $_POST["cskt_account"],
 								// george
 //								'client_id' => 'abcd',
@@ -154,9 +167,9 @@
 						$exploded = explode('"', $response['body']);
 
 						for ($i=0; $i < sizeof($exploded); ++$i) {
-							if ($exploded[$i] = 'access_token') {
+							if ($exploded[$i] = 'cskt_access_token') {
 								// send at to db
-								add_option('access_token', $exploded[$i+3]);
+								add_option('cskt_access_token', $exploded[$i+3]);
 								break;
 							}
 						}
@@ -165,7 +178,7 @@
 
 				// public function to securely get the private access token
 				public function getAccessToken() {
-					return $this->access_token;
+					return $this->cskt_access_token;
 				}
 
 			}
@@ -174,14 +187,15 @@
 				// if connecting to cskt
 				public function __construct() {
 					if(isset($_POST["disconnect-submit"]) && current_user_can('install_plugins')) {
-						delete_option('access_token');
+						delete_option('cskt_access_token');
 						delete_option('cskt_source_id');
 						delete_option('cskt_client_id');
+						delete_option('cskt_organization_id');
 					}
 				}
 			}
 
-			if (get_option('access_token')) {
+			if (get_option('cskt_access_token')) {
 				$oauth = new OAuthDisconnect();
 			} else {
 				$oauth = new OAuthConnect();

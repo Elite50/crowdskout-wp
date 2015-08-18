@@ -1,7 +1,7 @@
 
 <h2>Crowdskout Settings</h2>
 <div class="wrap">
-	<?php if (get_option('access_token')) : ?>
+	<?php if (get_option('cskt_access_token')) : ?>
 		<h5>This site is connected to your Crowdskout account</h5>
 		<form method="POST" action="" class="cskt_disconnect">
 			<table class="form-table">
@@ -16,7 +16,7 @@
 			</table>
 		</form>
 	<?php endif; ?>
-	<?php if (!get_option('access_token')) : ?>
+	<?php if (!get_option('cskt_access_token')) : ?>
 	<form method="POST" action="" class="cskt_login">
 		<table class="form-table">
 			<tbody>
@@ -56,8 +56,7 @@
 						<label for="cskt_accounts">Crowdskout Client</label>
 					</th>
 					<td>
-						<select id="cskt_accounts" name="cskt_account">
-						</select>
+						<select id="cskt_accounts" name="cskt_account"></select>
 						<p class="description">Choose which Crowdskout Client account to connect to this wordpress site.</p>
 					</td>
 				</tr>

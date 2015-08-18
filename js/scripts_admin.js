@@ -12,7 +12,7 @@ jQuery(document).ready(function($) {
         var csktPassword = $('.cskt_password').val();
         var csktEmail = $('.cskt_email').val();
 
-        $("#cskt_connect").append( '<input type="hidden" name="password" value="' + csktPassword + '"/>' );
+        $("#cskt_connect").append( '<input type="hidden" name="cskt_password" value="' + csktPassword + '"/>' );
 
         var form = $(this);
         var formMethod = form.attr('method'); // method to send data (post method)
@@ -38,11 +38,11 @@ jQuery(document).ready(function($) {
             success: function(data){ // callback function called if ajax returns success
                 // vars
                 var responseData = $.parseJSON(data);
-
+                console.log(responseData);
                 var newResponse = 'response_success';
 
                 for (i=0; i < responseData.data.length; i++) {
-                    if (responseData.data[i].permissionsLevel == "Administrator") {
+                    if (responseData.data[i].userLevel == "Administrator") {
                         $( "#cskt_accounts" ).append( '<option value="' + responseData.data[i].id + ':' + csktEmail + '">' + responseData.data[i].name + '</option>' );
                     }
                 }
