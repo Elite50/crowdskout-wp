@@ -32,9 +32,15 @@
 	define('CSKT_BACKEND', 'https://api.crowdskout.com');
 	if (WP_DEBUG) {
 		$GLOBALS['backend'] = constant( "LOCAL_BACKEND" );
-
+		define('cskt_client_id', 'r1NALiNIJN4qFCZoL6ThgarZUXuBhSVpDcDf9Ga');
+		define('cskt_client_secret', 'v2tVxJI9rkbUJlm5yE1pdXnr5YSgVIE6swwJPn3');
+		// if using local backend 2
+//		define('cskt_client_id', 'abcd');
+//		define('cskt_client_secret', 'DPdANFHSZkukp82NB9yFLlX3ivF8LDys');
 	} else {
 		$GLOBALS['backend'] = constant( "CSKT_BACKEND" );
+		define('cskt_client_id', 'r1NALiNIJN4qFCZoL6ThgarZUXuBhSVpDcDf9Ga');
+		define('cskt_client_secret', 'v2tVxJI9rkbUJlm5yE1pdXnr5YSgVIE6swwJPn3');
 	}
 
 	// javascript debug var
@@ -153,12 +159,8 @@
 								'grant_type' => 'password',
 								'password' => $_POST["cskt_password"],
 								'username' => $_POST["cskt_account"],
-								// george
-//								'client_id' => 'abcd',
-//								'client_secret' => 'DPdANFHSZkukp82NB9yFLlX3ivF8LDys'
-								// will
-								'client_id' => 'r1NALiNIJN4qFCZoL6ThgarZUXuBhSVpDcDf9Ga',
-								'client_secret' => 'v2tVxJI9rkbUJlm5yE1pdXnr5YSgVIE6swwJPn3'
+								'client_id' => cskt_client_id,
+								'client_secret' => cskt_client_secret
 							)
 						);
 
