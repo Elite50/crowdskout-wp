@@ -27,31 +27,13 @@
      */
 
     define('CSKT_PLUGIN_SERVER_ROOT', __DIR__);
-	define('LOCAL_BACKEND', 'http://loc.cs-back.com'); // Will
-	define('LOCAL_BACKEND_2', 'http://dev.api.crowdskout.com'); // George
 	define('CSKT_BACKEND', 'https://api.crowdskout.com');
-	if (WP_DEBUG) {
-		$GLOBALS['backend'] = constant( "LOCAL_BACKEND" );
-		define('cskt_client_id', 'r1NALiNIJN4qFCZoL6ThgarZUXuBhSVpDcDf9Ga');
-		define('cskt_client_secret', 'v2tVxJI9rkbUJlm5yE1pdXnr5YSgVIE6swwJPn3');
-		// if using local backend 2
-//		define('cskt_client_id', 'abcd');
-//		define('cskt_client_secret', 'DPdANFHSZkukp82NB9yFLlX3ivF8LDys');
-	} else {
-		$GLOBALS['backend'] = constant( "CSKT_BACKEND" );
-		define('cskt_client_id', 'r1NALiNIJN4qFCZoL6ThgarZUXuBhSVpDcDf9Ga');
-		define('cskt_client_secret', 'v2tVxJI9rkbUJlm5yE1pdXnr5YSgVIE6swwJPn3');
-	}
-
-	// javascript debug var
-	add_action( 'wp_head', function () {
-		echo '<script>var WP_DEBUG = ';
-		echo ( defined( 'WP_DEBUG' ) && WP_DEBUG === true ) ? 'true' : 'false';
-		echo ';</script>';
-	} );
+	$GLOBALS['backend'] = constant( "CSKT_BACKEND" );
+	define('cskt_client_id', 'r1NALiNIJN4qFCZoL6ThgarZUXuBhSVpDcDf9Ga');
+	define('cskt_client_secret', 'v2tVxJI9rkbUJlm5yE1pdXnr5YSgVIE6swwJPn3');
 
 	if (WP_DEBUG) {
-	    require_once CSKT_PLUGIN_SERVER_ROOT . '/utils/logger.php'; // util functions for dev
+	    require_once CSKT_PLUGIN_SERVER_ROOT . '/utils/logger.php'; // util functions for dev purposes, logging php
 	}
     require_once CSKT_PLUGIN_SERVER_ROOT . '/admin/admin-page.php'; // generates settings page
     //TODO these are commented out b/c they dont really work anymore.  Next step is to build the forms interface and
