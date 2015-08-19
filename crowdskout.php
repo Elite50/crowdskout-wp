@@ -64,8 +64,8 @@
     }
 
 	if (!function_exists('cskt_add_admin_scripts')) {
-		add_action( 'admin_enqueue_scripts', 'mn_add_admin_scripts' );
-		function mn_add_admin_scripts() {
+		add_action( 'admin_enqueue_scripts', 'cskt_add_admin_scripts' );
+		function cskt_add_admin_scripts() {
 			if (!WP_DEBUG) {
 				$flag = '.min';
 			} else {
