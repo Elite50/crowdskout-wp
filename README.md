@@ -1,13 +1,14 @@
 #The Crowdskout WordPress Plugin
 
-Easily add the Crowdskout analytics suite to any WordPress site.
+Easily connect your Crowdskout account to your WordPress site.
 
 ## Description ##
 
-With a simple installation, this plugin adds [Crowdskout](http://crowdskout.com)'s Analytics JavaScript to the footer of any WordPress site, Crowdskout track-able newsletter sign-up widgets and shortcodes, and with the 1.2 build, tags and categories tracking is integrated into pageviews.
+Automatically send pageviews, with categories and tags, to your [Crowdskout](http://crowdskout.com) account with this
+ simple installation.
 
 ### Crowdskout Pageview Analytics ###
-After entering in the appropriate client details, pageviews with categories and tags will be automatically tracked by the plugin.
+Pageviews with categories and tags are be automatically tracked and sent to your Crowdskout account.
 
 ### Crowdskout Newsletter ###
 Crowdskout-tracked newsletter sign-up forms can be added to your WordPress site via shortcodes and widgets. Widgets can be added through WordPress' drag and drop interface. 
@@ -16,10 +17,13 @@ To add a Crowdskout Newsletter shortcode, enter `[cskt_newsletter]` into the pos
 
 ## Installation ##
 
-* Login to the Crowdskout platform, and navigate to Settings > Web Site and note the Source ID and Client ID.
-* Now login to the WordPress backend, and navigate to Settings > Crowdskout. Once you enter your Source ID and Client ID here and save, your page views will automatically start tracking and newsletter sign-ups will be ingested to the Crowdskout platform.
+* Navigate to Settings > Crowdskout. Enter your Crowdskout username and password, and connect to your client account.
+  Pageviews, tags and categories will be tracked automatically.
 
 ## Changelog ##
+
+### 2.0 ###
+* OAuth login authentication for simple connection to your Crowdskout account
 
 ### 1.2.2 ###
 * Fixed a bug in PHP 5.3 support
