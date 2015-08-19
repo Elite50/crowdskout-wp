@@ -3,7 +3,7 @@
      * Plugin Name: Crowdskout
      * Plugin URI: http://crowdskout.com
      * Description: Adds Crowdskout analytics to your site
-     * Version: 1.2.2
+     * Version: 2.0
      * Author: George Yates III
      * Author URI: http://georgeyatesiii.com
      * Text Domain: crowdskout
