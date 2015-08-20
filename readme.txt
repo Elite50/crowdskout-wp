@@ -3,7 +3,7 @@ Contributors: GYatesIII, James Keary
 Tags: analytics, crowdskout
 Requires at least: 3.0.1
 Tested up to: 4.3
-Stable tag: 2.0
+Stable tag: 2.0.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -28,6 +28,9 @@ To add a Crowdskout Newsletter shortcode, enter `[cskt_newsletter]` into the pos
   Pageviews, tags and categories will be tracked automatically.
 
 == Changelog ==
+
+= 2.0.1 =
+* Fixed OAuth access denied bug
 
 = 2.0 =
 * OAuth login authentication for simple connection to your Crowdskout account

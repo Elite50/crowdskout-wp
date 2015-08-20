@@ -22,6 +22,9 @@ To add a Crowdskout Newsletter shortcode, enter `[cskt_newsletter]` into the pos
 
 ## Changelog ##
 
+### 2.0.1 ###
+* Fixed OAuth access denied bug
+
 ### 2.0 ###
 * OAuth login authentication for simple connection to your Crowdskout account
 

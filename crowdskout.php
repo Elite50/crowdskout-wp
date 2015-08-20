@@ -3,7 +3,7 @@
      * Plugin Name: Crowdskout
      * Plugin URI: http://crowdskout.com
      * Description: Adds Crowdskout analytics to your site
-     * Version: 2.0
+     * Version: 2.0.1
      * Author: George Yates III
      * Author URI: http://georgeyatesiii.com
      * Text Domain: crowdskout
@@ -31,11 +31,6 @@
 	$GLOBALS['backend'] = constant( "CSKT_BACKEND" );
 	define('cskt_client_id', 'jVySMKcH5tBsxXu3');
 	define('cskt_client_secret', 'kdT3DsRkIoesTLOpXiXcygc5rPi1Pbjs');
-//
-//Client created successfully
-//Client Name: Wordpress Plugin
-//Client ID: jVySMKcH5tBsxXu3
-//Client Secret: kdT3DsRkIoesTLOpXiXcygc5rPi1Pbjs
 
 	if (WP_DEBUG) {
 	    require_once CSKT_PLUGIN_SERVER_ROOT . '/utils/logger.php'; // util functions for dev purposes, logging php
