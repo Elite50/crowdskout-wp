@@ -29,8 +29,13 @@
     define('CSKT_PLUGIN_SERVER_ROOT', __DIR__);
 	define('CSKT_BACKEND', 'https://api.crowdskout.com');
 	$GLOBALS['backend'] = constant( "CSKT_BACKEND" );
-	define('cskt_client_id', 'r1NALiNIJN4qFCZoL6ThgarZUXuBhSVpDcDf9Ga');
-	define('cskt_client_secret', 'v2tVxJI9rkbUJlm5yE1pdXnr5YSgVIE6swwJPn3');
+	define('cskt_client_id', 'jVySMKcH5tBsxXu3');
+	define('cskt_client_secret', 'kdT3DsRkIoesTLOpXiXcygc5rPi1Pbjs');
+//
+//Client created successfully
+//Client Name: Wordpress Plugin
+//Client ID: jVySMKcH5tBsxXu3
+//Client Secret: kdT3DsRkIoesTLOpXiXcygc5rPi1Pbjs
 
 	if (WP_DEBUG) {
 	    require_once CSKT_PLUGIN_SERVER_ROOT . '/utils/logger.php'; // util functions for dev purposes, logging php
@@ -96,32 +101,10 @@
 				);
 
 				$response = wp_remote_get($action, $args);
-
-		        $substr=strchr($response['body'], "source");
-		        $exploded = explode('"', $substr);
-
-		        $keys = array();
-		        $values = array();
-		        foreach ($exploded as $explodedItem) {
-			        if (preg_match('!\d+!', $explodedItem)) {
-				        preg_match_all('!\d+!', $explodedItem, $matches);
-				        array_push($values, $matches[0][0]);
-			        } else {
-				        array_push($keys, $explodedItem);
-			        }
-		        }
-
-		        for ($x=0; $x<sizeof($keys);$x++) {
-			        if ($keys[$x] == "source" && !get_option('cskt_source_id')) {
-				        add_option('cskt_source_id', $values[$x]);
-			        }
-			        if ($keys[$x] == "client" && !get_option('cskt_client_id')) {
-				        add_option('cskt_client_id', $values[$x]);
-			        }
-			        if ($keys[$x] == "organization" && !get_option('cskt_organization_id')) {
-				        add_option('cskt_organization_id', $values[$x]);
-			        }
-		        }
+		        $body = json_decode($response['body']);
+		        add_option('cskt_source_id', $body->data->source);
+		        add_option('cskt_client_id', $body->data->client);
+		        add_option('cskt_organization_id', $body->data->organization);
 
 		        require CSKT_PLUGIN_SERVER_ROOT . '/views/footer-js.php';
 	        }

@@ -20,11 +20,9 @@ jQuery(document).ready(function($) {
             email: csktEmail,
             password: csktPassword
         };
-        if (window.location.hostname == "csplug.com") { // then you are in dev and use local cskt server for testing
-            var formUrl = "http://loc.cs-back.com/login"; // URL to send our data to
-        } else {
-            var formUrl = "https://api.crowdskout.com/login";
-        }
+
+        var formUrl = "https://api.crowdskout.com/login";
+
         var responseMsg = $('#submit_response', this);
 
         //show response message - waiting
