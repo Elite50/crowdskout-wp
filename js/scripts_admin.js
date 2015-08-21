@@ -13,7 +13,6 @@ jQuery(document).ready(function($) {
         var csktEmail = $('.cskt_email').val();
 
         $("#cskt_connect").append( '<input type="hidden" name="cskt_password" value="' + csktPassword + '"/>' );
-        $("#cskt_connect").append( '<input type="hidden" name="cskt_email" value="' + csktEmail + '"/>' );
 
         var form = $(this);
         var formMethod = form.attr('method'); // method to send data (post method)
