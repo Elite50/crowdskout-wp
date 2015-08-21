@@ -34,15 +34,14 @@ module.exports = function(grunt) {
 
     uglify: { // minify js
       options: {
-        banner: '/*! <%= pkg.name %> <%= grunt.template.today("yyyy-mm-dd") %> */\n'
+        banner: '/*! <%= pkg.name %> <%= grunt.template.today("yyyy-mm-dd") %> */\n',
+        sourceMap: true
       },
-      build: { // add different build tasks for different folders as you build out functionalities
-        src: 'js/forms_js_interface.js',
-        dest: 'js/forms_js_interface.min.js'
-      },
-      build2: {
-          src: 'js/scripts_admin.js',
-          dest: 'js/scripts_admin.min.js'
+      static_mappings: {
+        files: [
+          {src: 'js/forms_js_interface.js', dest: 'js/forms_js_interface.min.js'},
+          {src: 'js/scripts_admin.js', dest: 'js/scripts_admin.min.js'}
+        ]
       }
     },
 
@@ -65,10 +64,10 @@ module.exports = function(grunt) {
         tasks: ['compass:dev']
       },
       js: {
-        files: ['js/**/*.js'],
-        task: ['uglify'],
+        files: ['js/*.js', '!js/*.min.js'],
+        tasks: ['uglify'],
           options: {
-              livereload:true
+              livereload: true
           }
       },
       changes: { // if changes in js livereload

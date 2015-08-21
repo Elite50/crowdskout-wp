@@ -29,14 +29,9 @@
         }
     }
     if (!window.Crowdskout) {
-        if (WP_DEBUG) {
-          var t = "http://loc.cs-back.com";
-        } else {
-          t = 'https://api.crowdskout.com'
-        }
         var n = document.getElementsByTagName("head")[0];
         var r = document.createElement("script");
-        r.src = t + "/forms.js";
+        r.src = "https://api.crowdskout.com/forms.js";
         r.onload = function() {
             e()
         };

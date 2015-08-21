@@ -131,10 +131,10 @@
 
 						// get access code from cskt
 						$response = wp_remote_post($action, $body);
-						$body = json_decode($response['body']);
+						$bod = json_decode($response['body']);
 
 						// send at to db
-						add_option('cskt_access_token', $body->access_token);
+						add_option('cskt_access_token', $bod->access_token);
 					}
 				}
 
