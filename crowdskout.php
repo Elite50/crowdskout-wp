@@ -123,7 +123,7 @@
 							'body' => array (
 								'grant_type' => 'password',
 								'password' => $_POST["cskt_password"],
-								'username' => $_POST["cskt_account"],
+								'username' => $_POST["cskt_email"],
 								'client_id' => cskt_client_id,
 								'client_secret' => cskt_client_secret
 							)
