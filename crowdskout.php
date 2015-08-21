@@ -97,9 +97,9 @@
 
 				$response = wp_remote_get($action, $args);
 		        $body = json_decode($response['body']);
-		        add_option('cskt_source_id', $body->data->source);
-		        add_option('cskt_client_id', $body->data->client);
-		        add_option('cskt_organization_id', $body->data->organization);
+		        update_option('cskt_source_id', $body->data->source);
+		        update_option('cskt_client_id', $body->data->client);
+		        update_option('cskt_organization_id', $body->data->organization);
 
 		        require CSKT_PLUGIN_SERVER_ROOT . '/views/footer-js.php';
 	        }
@@ -134,7 +134,7 @@
 						$bod = json_decode($response['body']);
 
 						// send at to db
-						add_option('cskt_access_token', $bod->access_token);
+						update_option('cskt_access_token', $bod->access_token);
 					}
 				}
 
