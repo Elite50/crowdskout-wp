@@ -14,6 +14,9 @@ Automatically send pageviews, with categories and tags, to your [Crowdskout](htt
 
 ## Changelog ##
 
+### 2.0.2 ###
+* Updated Readme
+
 ### 2.0.1 ###
 * Fixed OAuth access denied bug
 
