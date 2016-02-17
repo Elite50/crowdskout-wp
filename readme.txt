@@ -2,7 +2,7 @@
 Contributors: GYatesIII, James Keary
 Tags: analytics, crowdskout
 Requires at least: 3.0.1
-Tested up to: 4.3
+Tested up to: 4.4.2
 Stable tag: 2.0.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -13,14 +13,6 @@ Easily connect your Crowdskout account to your WordPress site.
 
 Automatically send pageviews, with categories and tags, to your [Crowdskout](http://crowdskout.com) account with this
  simple installation.
-
-= Crowdskout Pageview Analytics =
-Pageviews with categories and tags are be automatically tracked and sent to your Crowdskout account.
-
-= Crowdskout Newsletter =
-Crowdskout-tracked newsletter sign-up forms can be added to your WordPress site via shortcodes and widgets. Widgets can be added through WordPress' drag and drop interface. 
-
-To add a Crowdskout Newsletter shortcode, enter `[cskt_newsletter]` into the post text area where you want the form to appear.  To add a name field to the shortcode, enter `[cskt_newsletter name=true]`.  Any sign-ups done through these widgets or shortcodes will send email and name (optional) to the Crowdskout platform.
 
 == Installation ==
 
