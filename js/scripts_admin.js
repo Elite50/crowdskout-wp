@@ -36,12 +36,11 @@ jQuery(document).ready(function($) {
             success: function(data){ // callback function called if ajax returns success
                 // vars
                 var responseData = $.parseJSON(data);
-                console.log(responseData);
                 var newResponse = 'response_success';
 
-                for (i=0; i < responseData.data.length; i++) {
-                    if (responseData.data[i].userLevel == "Administrator") {
-                        $( "#cskt_accounts" ).append( '<option value="' + responseData.data[i].id + ':' + csktEmail + '">' + responseData.data[i].name + '</option>' );
+                for (i=0; i < responseData.data.clients.length; i++) {
+                    if (responseData.data.clients[i].userLevel == "Administrator") {
+                        $( "#cskt_accounts" ).append( '<option value="' + responseData.data.clients[i].id + ':' + csktEmail + '">' + responseData.data.clients[i].name + '</option>' );
                     }
                 }
                 // show response message
