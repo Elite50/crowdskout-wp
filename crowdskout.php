@@ -54,12 +54,12 @@
                 $flag = '.min';
             } else {
                 $flag = '';
-                wp_enqueue_script('livereload.js', "//localhost:1337/livereload.js", array('jquery'), '', true);
+                wp_enqueue_script('livereload.js', "//localhost:1337/livereload.js", ['jquery'], '', true);
             }
 	        //TODO this is commented out since it is part of the forms, surveys and quizes module that has not been
 	        // built yet.
 //            wp_enqueue_script('forms_js_interface' . $flag . '.js', plugins_url() .
-//                                                                     "/crowdskout-wp/js/forms_js_interface" . $flag . ".js", array('jquery'), '', true );
+//                                                                     "/crowdskout-wp/js/forms_js_interface" . $flag . ".js", ['jquery'), '', true );
         }
     }
 
@@ -71,7 +71,7 @@
 			} else {
 				$flag = '';
 			}
-			wp_enqueue_script('admin_scripts' . $flag . ".js", plugins_url() . "/crowdskout-wp/js/scripts_admin" . $flag . ".js", array('jquery'), '', true);
+			wp_enqueue_script('admin_scripts' . $flag . ".js", plugins_url() . "/crowdskout-wp/js/scripts_admin" . $flag . ".js", ['jquery'], '', true);
 			if (isset($_GET['page']) && $_GET['page'] == 'crowdskout') {
 				wp_enqueue_style( 'styles', plugins_url() . '/crowdskout-wp/css/styles_admin.css', '', false, '' );
 			}
@@ -87,13 +87,13 @@
         function cskt_add_analytics_js() {
 	        if (get_option('cskt_access_token')) {
 
-		        $action  = $GLOBALS['backend'] . "/oauth/tracking";
+		        $action  = $GLOBALS['backend'] . "/v1/tracking";
 				$auth = "Bearer " . get_option('cskt_access_token');
-				$args = array(
-					'headers' => array (
+				$args = [
+					'headers' => [
 						"Authorization" => $auth
-					)
-				);
+					]
+				];
 
 				$response = wp_remote_get($action, $args);
 		        $body = json_decode($response['body']);
@@ -119,15 +119,15 @@
 					if(isset($_POST["connect-submit"]) && current_user_can('install_plugins')) {
 
 						$action = $GLOBALS['backend'] . "/oauth/access_token";
-						$body = array(
-							'body' => array (
+						$body = [
+							'body' => [
 								'grant_type' => 'password',
 								'password' => $_POST["cskt_password"],
 								'username' => $_POST["cskt_account"],
 								'client_id' => cskt_client_id,
 								'client_secret' => cskt_client_secret
-							)
-						);
+							]
+						];
 
 						// get access code from cskt
 						$response = wp_remote_post($action, $body);
