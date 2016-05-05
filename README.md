@@ -14,6 +14,9 @@ Automatically send pageviews, with categories and tags, to your [Crowdskout](htt
 
 ## Changelog ##
 
+### 2.0.4 ###
+* Versioning of Crowdskout API endpoints added
+
 ### 2.0.3 ###
 * Updated Login Procedures
 
