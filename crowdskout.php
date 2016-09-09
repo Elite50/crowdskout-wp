@@ -3,7 +3,7 @@
      * Plugin Name: Crowdskout
      * Plugin URI: http://crowdskout.com
      * Description: Adds Crowdskout analytics to your site
-     * Version: 2.0.1
+     * Version: 2.0.5
      * Author: George Yates III
      * Author URI: http://georgeyatesiii.com
      * Text Domain: crowdskout
@@ -36,8 +36,7 @@
 	    require_once CSKT_PLUGIN_SERVER_ROOT . '/utils/logger.php'; // util functions for dev purposes, logging php
 	}
     require_once CSKT_PLUGIN_SERVER_ROOT . '/admin/admin-page.php'; // generates settings page
-    //TODO these are commented out b/c they dont really work anymore.  Next step is to build the forms interface and
-    // set up the end point for the forms, surveys and quizes to be added through.
+    // TODO commented out b/c they dont really work anymore.  Next step is to build the forms interface and set up the end point for the forms, surveys and quizes to be added through.
     //require_once CSKT_PLUGIN_SERVER_ROOT . '/widget.php';
     //require_once CSKT_PLUGIN_SERVER_ROOT . '/shortcode.php';
     require_once CSKT_PLUGIN_SERVER_ROOT . '/topics.php';
@@ -54,12 +53,10 @@
                 $flag = '.min';
             } else {
                 $flag = '';
-                wp_enqueue_script('livereload.js', "//localhost:1337/livereload.js", ['jquery'], '', true);
+                wp_enqueue_script('livereload.js', "//localhost:1337/livereload.js", array('jquery'), '', true);
             }
-	        //TODO this is commented out since it is part of the forms, surveys and quizes module that has not been
-	        // built yet.
-//            wp_enqueue_script('forms_js_interface' . $flag . '.js', plugins_url() .
-//                                                                     "/crowdskout-wp/js/forms_js_interface" . $flag . ".js", ['jquery'), '', true );
+	        // TODO this is commented out since it is part of the forms, surveys and quizes module that has not been built yet.
+            //wp_enqueue_script('forms_js_interface' . $flag . '.js', plugins_url() . "/crowdskout-wp/js/forms_js_interface" . $flag . ".js", array('jquery'), '', true );
         }
     }
 
@@ -71,7 +68,7 @@
 			} else {
 				$flag = '';
 			}
-			wp_enqueue_script('admin_scripts' . $flag . ".js", plugins_url() . "/crowdskout-wp/js/scripts_admin" . $flag . ".js", ['jquery'], '', true);
+			wp_enqueue_script('admin_scripts' . $flag . ".js", plugins_url() . "/crowdskout-wp/js/scripts_admin" . $flag . ".js", array('jquery'), '', true);
 			if (isset($_GET['page']) && $_GET['page'] == 'crowdskout') {
 				wp_enqueue_style( 'styles', plugins_url() . '/crowdskout-wp/css/styles_admin.css', '', false, '' );
 			}
@@ -89,11 +86,11 @@
 
 		        $action  = $GLOBALS['backend'] . "/v1/tracking";
 				$auth = "Bearer " . get_option('cskt_access_token');
-				$args = [
-					'headers' => [
+				$args = array(
+					'headers' => array(
 						"Authorization" => $auth
-					]
-				];
+                    )
+                );
 
 				$response = wp_remote_get($action, $args);
 		        $body = json_decode($response['body']);
@@ -119,15 +116,15 @@
 					if(isset($_POST["connect-submit"]) && current_user_can('install_plugins')) {
 
 						$action = $GLOBALS['backend'] . "/oauth/access_token";
-						$body = [
-							'body' => [
+						$body = array(
+							'body' => array(
 								'grant_type' => 'password',
 								'password' => $_POST["cskt_password"],
 								'username' => $_POST["cskt_account"],
 								'client_id' => cskt_client_id,
 								'client_secret' => cskt_client_secret
-							]
-						];
+                            )
+                        );
 
 						// get access code from cskt
 						$response = wp_remote_post($action, $body);
